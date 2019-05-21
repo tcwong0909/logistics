@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- 关联数据属性文件 -->
+	<context:property-placeholder location="classpath:db.properties" />
+	<!-- 开启扫描 -->
+	<context:component-scan base-package="com.tcwong.service.*" />
+
+	<!-- 配置数据源 -->
+	<!--<bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource">
+		<property name="driverClass" value="${driver}"/>
+		<property name="jdbcUrl" value="${url}"/>
+		<property name="user" value="${names}"/>
+		<property name="password" value="${password}"/>
+	</bean>-->
+	<bean class="com.alibaba.druid.pool.DruidDataSource" id="dataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="username" value="${db.username}"/>
+		<property name="password" value="${db.password}"/>
+        <property name="url" value="${db.url}"/>
+		<property name="initialSize" value="10"/>
+		<property name="maxActive" value="50"/>
+		<property name="minIdle" value="10"/>
+		<property name="maxWait" value="50000"/>
+		<property name="poolPreparedStatements" value="true"/>
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="1800"/>
+	</bean>
+	<!-- 整合mybatis -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
+		<!-- 关联数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 关联mybatis的配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<!-- 添加别名设置 -->
+		<property name="typeAliasesPackage" value="com.tcwong.bean" />
+		<!-- 映射文件和接口文件不在同一个目录下的时候 -->
+		<property name="mapperLocations" value="classpath*:mapper/*.xml"/>
+	</bean>
+	
+	<!-- 配置扫描的路径 -->
+	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.tcwong.dao" />
+	</bean>
+
+	<!--事务管理-->
+	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*"/>
+			<tx:method name="insert*"/>
+			<tx:method name="update*"/>
+			<tx:method name="delete*"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="pc1" expression="execution(* com.tcwong.service.*.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pc1"/>
+	</aop:config>
+	<!--shiro-->
+	<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" id="credentialsMatcher">
+		<property name="hashAlgorithmName" value="MD5"/>
+		<property name="hashIterations" value="1024"/>
+		<property name="storedCredentialsHexEncoded" value="true"/>
+	</bean>
+	<bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" id="securityManager">
+		<property name="realm">
+            <bean class="com.tcwong.realm.LoginRealm">
+                <property name="credentialsMatcher" ref="credentialsMatcher"/>
+            </bean>
+		</property>
+	</bean>
+	<bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
+		<property name="loginUrl" value="/login"/>
+		<property name="unauthorizedUrl" value="/unauthorizedUrl"/>
+		<property name="securityManager" ref="securityManager"/>
+		<property name="filterChainDefinitions">
+			<value>
+				/login=anon
+				/**=authc
+			</value>
+		</property>
+	</bean>
+
+</beans>

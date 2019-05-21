@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tcwong.dao.CarriersMapper">
+  <resultMap id="BaseResultMap" type="com.tcwong.bean.Carriers">
+    <id column="carriersID" jdbcType="INTEGER" property="carriersid" />
+    <result column="sendCompany" jdbcType="VARCHAR" property="sendcompany" />
+    <result column="sendAddress" jdbcType="VARCHAR" property="sendaddress" />
+    <result column="sendLinkMan" jdbcType="VARCHAR" property="sendlinkman" />
+    <result column="sendPhone" jdbcType="VARCHAR" property="sendphone" />
+    <result column="receiveCompany" jdbcType="VARCHAR" property="receivecompany" />
+    <result column="fk_receiveAddress" jdbcType="VARCHAR" property="fkReceiveaddress" />
+    <result column="receiveLinkMan" jdbcType="VARCHAR" property="receivelinkman" />
+    <result column="receivePhone" jdbcType="VARCHAR" property="receivephone" />
+    <result column="leaverDate" jdbcType="TIMESTAMP" property="leaverdate" />
+    <result column="receiveDate" jdbcType="TIMESTAMP" property="receivedate" />
+    <result column="finishedState" jdbcType="INTEGER" property="finishedstate" />
+    <result column="insuranceCost" jdbcType="REAL" property="insurancecost" />
+    <result column="transportCost" jdbcType="REAL" property="transportcost" />
+    <result column="otherCost" jdbcType="REAL" property="othercost" />
+    <result column="totalCost" jdbcType="REAL" property="totalcost" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="fk_userID" jdbcType="INTEGER" property="fkUserid" />
+    <result column="checkInTime" jdbcType="TIMESTAMP" property="checkintime" />
+    <result column="isDelete" jdbcType="INTEGER" property="isdelete" />
+    <result column="alterTime" jdbcType="TIMESTAMP" property="altertime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    carriersID, sendCompany, sendAddress, sendLinkMan, sendPhone, receiveCompany, fk_receiveAddress, 
+    receiveLinkMan, receivePhone, leaverDate, receiveDate, finishedState, insuranceCost, 
+    transportCost, otherCost, totalCost, remark, fk_userID, checkInTime, isDelete, alterTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tcwong.bean.CarriersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from carriers
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from carriers
+    where carriersID = #{carriersid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from carriers
+    where carriersID = #{carriersid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tcwong.bean.CarriersExample">
+    delete from carriers
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tcwong.bean.Carriers">
+    insert into carriers (carriersID, sendCompany, sendAddress, 
+      sendLinkMan, sendPhone, receiveCompany, 
+      fk_receiveAddress, receiveLinkMan, receivePhone, 
+      leaverDate, receiveDate, finishedState, 
+      insuranceCost, transportCost, otherCost, 
+      totalCost, remark, fk_userID, 
+      checkInTime, isDelete, alterTime
+      )
+    values (#{carriersid,jdbcType=INTEGER}, #{sendcompany,jdbcType=VARCHAR}, #{sendaddress,jdbcType=VARCHAR}, 
+      #{sendlinkman,jdbcType=VARCHAR}, #{sendphone,jdbcType=VARCHAR}, #{receivecompany,jdbcType=VARCHAR}, 
+      #{fkReceiveaddress,jdbcType=VARCHAR}, #{receivelinkman,jdbcType=VARCHAR}, #{receivephone,jdbcType=VARCHAR}, 
+      #{leaverdate,jdbcType=TIMESTAMP}, #{receivedate,jdbcType=TIMESTAMP}, #{finishedstate,jdbcType=INTEGER}, 
+      #{insurancecost,jdbcType=REAL}, #{transportcost,jdbcType=REAL}, #{othercost,jdbcType=REAL}, 
+      #{totalcost,jdbcType=REAL}, #{remark,jdbcType=VARCHAR}, #{fkUserid,jdbcType=INTEGER}, 
+      #{checkintime,jdbcType=TIMESTAMP}, #{isdelete,jdbcType=INTEGER}, #{altertime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcwong.bean.Carriers">
+    insert into carriers
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="carriersid != null">
+        carriersID,
+      </if>
+      <if test="sendcompany != null">
+        sendCompany,
+      </if>
+      <if test="sendaddress != null">
+        sendAddress,
+      </if>
+      <if test="sendlinkman != null">
+        sendLinkMan,
+      </if>
+      <if test="sendphone != null">
+        sendPhone,
+      </if>
+      <if test="receivecompany != null">
+        receiveCompany,
+      </if>
+      <if test="fkReceiveaddress != null">
+        fk_receiveAddress,
+      </if>
+      <if test="receivelinkman != null">
+        receiveLinkMan,
+      </if>
+      <if test="receivephone != null">
+        receivePhone,
+      </if>
+      <if test="leaverdate != null">
+        leaverDate,
+      </if>
+      <if test="receivedate != null">
+        receiveDate,
+      </if>
+      <if test="finishedstate != null">
+        finishedState,
+      </if>
+      <if test="insurancecost != null">
+        insuranceCost,
+      </if>
+      <if test="transportcost != null">
+        transportCost,
+      </if>
+      <if test="othercost != null">
+        otherCost,
+      </if>
+      <if test="totalcost != null">
+        totalCost,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="fkUserid != null">
+        fk_userID,
+      </if>
+      <if test="checkintime != null">
+        checkInTime,
+      </if>
+      <if test="isdelete != null">
+        isDelete,
+      </if>
+      <if test="altertime != null">
+        alterTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="carriersid != null">
+        #{carriersid,jdbcType=INTEGER},
+      </if>
+      <if test="sendcompany != null">
+        #{sendcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="sendaddress != null">
+        #{sendaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sendlinkman != null">
+        #{sendlinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="sendphone != null">
+        #{sendphone,jdbcType=VARCHAR},
+      </if>
+      <if test="receivecompany != null">
+        #{receivecompany,jdbcType=VARCHAR},
+      </if>
+      <if test="fkReceiveaddress != null">
+        #{fkReceiveaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receivelinkman != null">
+        #{receivelinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="receivephone != null">
+        #{receivephone,jdbcType=VARCHAR},
+      </if>
+      <if test="leaverdate != null">
+        #{leaverdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivedate != null">
+        #{receivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedstate != null">
+        #{finishedstate,jdbcType=INTEGER},
+      </if>
+      <if test="insurancecost != null">
+        #{insurancecost,jdbcType=REAL},
+      </if>
+      <if test="transportcost != null">
+        #{transportcost,jdbcType=REAL},
+      </if>
+      <if test="othercost != null">
+        #{othercost,jdbcType=REAL},
+      </if>
+      <if test="totalcost != null">
+        #{totalcost,jdbcType=REAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="fkUserid != null">
+        #{fkUserid,jdbcType=INTEGER},
+      </if>
+      <if test="checkintime != null">
+        #{checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null">
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="altertime != null">
+        #{altertime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tcwong.bean.CarriersExample" resultType="java.lang.Integer">
+    select count(*) from carriers
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update carriers
+    <set>
+      <if test="record.carriersid != null">
+        carriersID = #{record.carriersid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendcompany != null">
+        sendCompany = #{record.sendcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendaddress != null">
+        sendAddress = #{record.sendaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendlinkman != null">
+        sendLinkMan = #{record.sendlinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendphone != null">
+        sendPhone = #{record.sendphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivecompany != null">
+        receiveCompany = #{record.receivecompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fkReceiveaddress != null">
+        fk_receiveAddress = #{record.fkReceiveaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivelinkman != null">
+        receiveLinkMan = #{record.receivelinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivephone != null">
+        receivePhone = #{record.receivephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leaverdate != null">
+        leaverDate = #{record.leaverdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.receivedate != null">
+        receiveDate = #{record.receivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finishedstate != null">
+        finishedState = #{record.finishedstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.insurancecost != null">
+        insuranceCost = #{record.insurancecost,jdbcType=REAL},
+      </if>
+      <if test="record.transportcost != null">
+        transportCost = #{record.transportcost,jdbcType=REAL},
+      </if>
+      <if test="record.othercost != null">
+        otherCost = #{record.othercost,jdbcType=REAL},
+      </if>
+      <if test="record.totalcost != null">
+        totalCost = #{record.totalcost,jdbcType=REAL},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fkUserid != null">
+        fk_userID = #{record.fkUserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkintime != null">
+        checkInTime = #{record.checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isdelete != null">
+        isDelete = #{record.isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.altertime != null">
+        alterTime = #{record.altertime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update carriers
+    set carriersID = #{record.carriersid,jdbcType=INTEGER},
+      sendCompany = #{record.sendcompany,jdbcType=VARCHAR},
+      sendAddress = #{record.sendaddress,jdbcType=VARCHAR},
+      sendLinkMan = #{record.sendlinkman,jdbcType=VARCHAR},
+      sendPhone = #{record.sendphone,jdbcType=VARCHAR},
+      receiveCompany = #{record.receivecompany,jdbcType=VARCHAR},
+      fk_receiveAddress = #{record.fkReceiveaddress,jdbcType=VARCHAR},
+      receiveLinkMan = #{record.receivelinkman,jdbcType=VARCHAR},
+      receivePhone = #{record.receivephone,jdbcType=VARCHAR},
+      leaverDate = #{record.leaverdate,jdbcType=TIMESTAMP},
+      receiveDate = #{record.receivedate,jdbcType=TIMESTAMP},
+      finishedState = #{record.finishedstate,jdbcType=INTEGER},
+      insuranceCost = #{record.insurancecost,jdbcType=REAL},
+      transportCost = #{record.transportcost,jdbcType=REAL},
+      otherCost = #{record.othercost,jdbcType=REAL},
+      totalCost = #{record.totalcost,jdbcType=REAL},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      fk_userID = #{record.fkUserid,jdbcType=INTEGER},
+      checkInTime = #{record.checkintime,jdbcType=TIMESTAMP},
+      isDelete = #{record.isdelete,jdbcType=INTEGER},
+      alterTime = #{record.altertime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcwong.bean.Carriers">
+    update carriers
+    <set>
+      <if test="sendcompany != null">
+        sendCompany = #{sendcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="sendaddress != null">
+        sendAddress = #{sendaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sendlinkman != null">
+        sendLinkMan = #{sendlinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="sendphone != null">
+        sendPhone = #{sendphone,jdbcType=VARCHAR},
+      </if>
+      <if test="receivecompany != null">
+        receiveCompany = #{receivecompany,jdbcType=VARCHAR},
+      </if>
+      <if test="fkReceiveaddress != null">
+        fk_receiveAddress = #{fkReceiveaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receivelinkman != null">
+        receiveLinkMan = #{receivelinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="receivephone != null">
+        receivePhone = #{receivephone,jdbcType=VARCHAR},
+      </if>
+      <if test="leaverdate != null">
+        leaverDate = #{leaverdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivedate != null">
+        receiveDate = #{receivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedstate != null">
+        finishedState = #{finishedstate,jdbcType=INTEGER},
+      </if>
+      <if test="insurancecost != null">
+        insuranceCost = #{insurancecost,jdbcType=REAL},
+      </if>
+      <if test="transportcost != null">
+        transportCost = #{transportcost,jdbcType=REAL},
+      </if>
+      <if test="othercost != null">
+        otherCost = #{othercost,jdbcType=REAL},
+      </if>
+      <if test="totalcost != null">
+        totalCost = #{totalcost,jdbcType=REAL},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="fkUserid != null">
+        fk_userID = #{fkUserid,jdbcType=INTEGER},
+      </if>
+      <if test="checkintime != null">
+        checkInTime = #{checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null">
+        isDelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="altertime != null">
+        alterTime = #{altertime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where carriersID = #{carriersid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcwong.bean.Carriers">
+    update carriers
+    set sendCompany = #{sendcompany,jdbcType=VARCHAR},
+      sendAddress = #{sendaddress,jdbcType=VARCHAR},
+      sendLinkMan = #{sendlinkman,jdbcType=VARCHAR},
+      sendPhone = #{sendphone,jdbcType=VARCHAR},
+      receiveCompany = #{receivecompany,jdbcType=VARCHAR},
+      fk_receiveAddress = #{fkReceiveaddress,jdbcType=VARCHAR},
+      receiveLinkMan = #{receivelinkman,jdbcType=VARCHAR},
+      receivePhone = #{receivephone,jdbcType=VARCHAR},
+      leaverDate = #{leaverdate,jdbcType=TIMESTAMP},
+      receiveDate = #{receivedate,jdbcType=TIMESTAMP},
+      finishedState = #{finishedstate,jdbcType=INTEGER},
+      insuranceCost = #{insurancecost,jdbcType=REAL},
+      transportCost = #{transportcost,jdbcType=REAL},
+      otherCost = #{othercost,jdbcType=REAL},
+      totalCost = #{totalcost,jdbcType=REAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      fk_userID = #{fkUserid,jdbcType=INTEGER},
+      checkInTime = #{checkintime,jdbcType=TIMESTAMP},
+      isDelete = #{isdelete,jdbcType=INTEGER},
+      alterTime = #{altertime,jdbcType=TIMESTAMP}
+    where carriersID = #{carriersid,jdbcType=INTEGER}
+  </update>
+</mapper>

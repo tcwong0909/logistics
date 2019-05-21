@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tcwong.dao.DriverMapper">
+  <resultMap id="BaseResultMap" type="com.tcwong.bean.Driver">
+    <id column="driverID" jdbcType="INTEGER" property="driverid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="birth" jdbcType="DATE" property="birth" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="IDCard" jdbcType="VARCHAR" property="idcard" />
+    <result column="fk_teamID" jdbcType="INTEGER" property="fkTeamid" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="checkInTime" jdbcType="TIMESTAMP" property="checkintime" />
+    <result column="isDelete" jdbcType="INTEGER" property="isdelete" />
+    <result column="alterTime" jdbcType="TIMESTAMP" property="altertime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    driverID, name, sex, birth, phone, IDCard, fk_teamID, state, remark, checkInTime, 
+    isDelete, alterTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tcwong.bean.DriverExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from driver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from driver
+    where driverID = #{driverid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from driver
+    where driverID = #{driverid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tcwong.bean.DriverExample">
+    delete from driver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tcwong.bean.Driver">
+    insert into driver (driverID, name, sex, 
+      birth, phone, IDCard, 
+      fk_teamID, state, remark, 
+      checkInTime, isDelete, alterTime
+      )
+    values (#{driverid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{birth,jdbcType=DATE}, #{phone,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
+      #{fkTeamid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{checkintime,jdbcType=TIMESTAMP}, #{isdelete,jdbcType=INTEGER}, #{altertime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcwong.bean.Driver">
+    insert into driver
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="driverid != null">
+        driverID,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birth != null">
+        birth,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="idcard != null">
+        IDCard,
+      </if>
+      <if test="fkTeamid != null">
+        fk_teamID,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="checkintime != null">
+        checkInTime,
+      </if>
+      <if test="isdelete != null">
+        isDelete,
+      </if>
+      <if test="altertime != null">
+        alterTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="driverid != null">
+        #{driverid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birth != null">
+        #{birth,jdbcType=DATE},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="fkTeamid != null">
+        #{fkTeamid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkintime != null">
+        #{checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null">
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="altertime != null">
+        #{altertime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tcwong.bean.DriverExample" resultType="java.lang.Integer">
+    select count(*) from driver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update driver
+    <set>
+      <if test="record.driverid != null">
+        driverID = #{record.driverid,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.birth != null">
+        birth = #{record.birth,jdbcType=DATE},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcard != null">
+        IDCard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fkTeamid != null">
+        fk_teamID = #{record.fkTeamid,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkintime != null">
+        checkInTime = #{record.checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isdelete != null">
+        isDelete = #{record.isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.altertime != null">
+        alterTime = #{record.altertime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update driver
+    set driverID = #{record.driverid,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      birth = #{record.birth,jdbcType=DATE},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      IDCard = #{record.idcard,jdbcType=VARCHAR},
+      fk_teamID = #{record.fkTeamid,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      checkInTime = #{record.checkintime,jdbcType=TIMESTAMP},
+      isDelete = #{record.isdelete,jdbcType=INTEGER},
+      alterTime = #{record.altertime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcwong.bean.Driver">
+    update driver
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birth != null">
+        birth = #{birth,jdbcType=DATE},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        IDCard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="fkTeamid != null">
+        fk_teamID = #{fkTeamid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkintime != null">
+        checkInTime = #{checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null">
+        isDelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="altertime != null">
+        alterTime = #{altertime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where driverID = #{driverid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcwong.bean.Driver">
+    update driver
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      birth = #{birth,jdbcType=DATE},
+      phone = #{phone,jdbcType=VARCHAR},
+      IDCard = #{idcard,jdbcType=VARCHAR},
+      fk_teamID = #{fkTeamid,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      checkInTime = #{checkintime,jdbcType=TIMESTAMP},
+      isDelete = #{isdelete,jdbcType=INTEGER},
+      alterTime = #{altertime,jdbcType=TIMESTAMP}
+    where driverID = #{driverid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tcwong.dao.SyslogMapper">
+  <resultMap id="BaseResultMap" type="com.tcwong.bean.Syslog">
+    <id column="logID" jdbcType="INTEGER" property="logid" />
+    <result column="fk_typeID" jdbcType="INTEGER" property="fkTypeid" />
+    <result column="fk_userID" jdbcType="INTEGER" property="fkUserid" />
+    <result column="procName" jdbcType="VARCHAR" property="procname" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+    <result column="checkInTime" jdbcType="TIMESTAMP" property="checkintime" />
+    <result column="isException" jdbcType="INTEGER" property="isexception" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tcwong.bean.Syslog">
+    <result column="behavior" jdbcType="LONGVARCHAR" property="behavior" />
+    <result column="parameters" jdbcType="LONGVARCHAR" property="parameters" />
+    <result column="exception" jdbcType="LONGVARCHAR" property="exception" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    logID, fk_typeID, fk_userID, procName, IP, checkInTime, isException
+  </sql>
+  <sql id="Blob_Column_List">
+    behavior, parameters, exception
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.tcwong.bean.SyslogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from syslog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.tcwong.bean.SyslogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from syslog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from syslog
+    where logID = #{logid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from syslog
+    where logID = #{logid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tcwong.bean.SyslogExample">
+    delete from syslog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tcwong.bean.Syslog">
+    insert into syslog (logID, fk_typeID, fk_userID, 
+      procName, IP, checkInTime, 
+      isException, behavior, parameters, 
+      exception)
+    values (#{logid,jdbcType=INTEGER}, #{fkTypeid,jdbcType=INTEGER}, #{fkUserid,jdbcType=INTEGER}, 
+      #{procname,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{checkintime,jdbcType=TIMESTAMP}, 
+      #{isexception,jdbcType=INTEGER}, #{behavior,jdbcType=LONGVARCHAR}, #{parameters,jdbcType=LONGVARCHAR}, 
+      #{exception,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcwong.bean.Syslog">
+    insert into syslog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logid != null">
+        logID,
+      </if>
+      <if test="fkTypeid != null">
+        fk_typeID,
+      </if>
+      <if test="fkUserid != null">
+        fk_userID,
+      </if>
+      <if test="procname != null">
+        procName,
+      </if>
+      <if test="ip != null">
+        IP,
+      </if>
+      <if test="checkintime != null">
+        checkInTime,
+      </if>
+      <if test="isexception != null">
+        isException,
+      </if>
+      <if test="behavior != null">
+        behavior,
+      </if>
+      <if test="parameters != null">
+        parameters,
+      </if>
+      <if test="exception != null">
+        exception,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logid != null">
+        #{logid,jdbcType=INTEGER},
+      </if>
+      <if test="fkTypeid != null">
+        #{fkTypeid,jdbcType=INTEGER},
+      </if>
+      <if test="fkUserid != null">
+        #{fkUserid,jdbcType=INTEGER},
+      </if>
+      <if test="procname != null">
+        #{procname,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="checkintime != null">
+        #{checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isexception != null">
+        #{isexception,jdbcType=INTEGER},
+      </if>
+      <if test="behavior != null">
+        #{behavior,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="parameters != null">
+        #{parameters,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="exception != null">
+        #{exception,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tcwong.bean.SyslogExample" resultType="java.lang.Integer">
+    select count(*) from syslog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update syslog
+    <set>
+      <if test="record.logid != null">
+        logID = #{record.logid,jdbcType=INTEGER},
+      </if>
+      <if test="record.fkTypeid != null">
+        fk_typeID = #{record.fkTypeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.fkUserid != null">
+        fk_userID = #{record.fkUserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.procname != null">
+        procName = #{record.procname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null">
+        IP = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkintime != null">
+        checkInTime = #{record.checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isexception != null">
+        isException = #{record.isexception,jdbcType=INTEGER},
+      </if>
+      <if test="record.behavior != null">
+        behavior = #{record.behavior,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.parameters != null">
+        parameters = #{record.parameters,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.exception != null">
+        exception = #{record.exception,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update syslog
+    set logID = #{record.logid,jdbcType=INTEGER},
+      fk_typeID = #{record.fkTypeid,jdbcType=INTEGER},
+      fk_userID = #{record.fkUserid,jdbcType=INTEGER},
+      procName = #{record.procname,jdbcType=VARCHAR},
+      IP = #{record.ip,jdbcType=VARCHAR},
+      checkInTime = #{record.checkintime,jdbcType=TIMESTAMP},
+      isException = #{record.isexception,jdbcType=INTEGER},
+      behavior = #{record.behavior,jdbcType=LONGVARCHAR},
+      parameters = #{record.parameters,jdbcType=LONGVARCHAR},
+      exception = #{record.exception,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update syslog
+    set logID = #{record.logid,jdbcType=INTEGER},
+      fk_typeID = #{record.fkTypeid,jdbcType=INTEGER},
+      fk_userID = #{record.fkUserid,jdbcType=INTEGER},
+      procName = #{record.procname,jdbcType=VARCHAR},
+      IP = #{record.ip,jdbcType=VARCHAR},
+      checkInTime = #{record.checkintime,jdbcType=TIMESTAMP},
+      isException = #{record.isexception,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcwong.bean.Syslog">
+    update syslog
+    <set>
+      <if test="fkTypeid != null">
+        fk_typeID = #{fkTypeid,jdbcType=INTEGER},
+      </if>
+      <if test="fkUserid != null">
+        fk_userID = #{fkUserid,jdbcType=INTEGER},
+      </if>
+      <if test="procname != null">
+        procName = #{procname,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        IP = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="checkintime != null">
+        checkInTime = #{checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isexception != null">
+        isException = #{isexception,jdbcType=INTEGER},
+      </if>
+      <if test="behavior != null">
+        behavior = #{behavior,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="parameters != null">
+        parameters = #{parameters,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="exception != null">
+        exception = #{exception,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where logID = #{logid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcwong.bean.Syslog">
+    update syslog
+    set fk_typeID = #{fkTypeid,jdbcType=INTEGER},
+      fk_userID = #{fkUserid,jdbcType=INTEGER},
+      procName = #{procname,jdbcType=VARCHAR},
+      IP = #{ip,jdbcType=VARCHAR},
+      checkInTime = #{checkintime,jdbcType=TIMESTAMP},
+      isException = #{isexception,jdbcType=INTEGER},
+      behavior = #{behavior,jdbcType=LONGVARCHAR},
+      parameters = #{parameters,jdbcType=LONGVARCHAR},
+      exception = #{exception,jdbcType=LONGVARCHAR}
+    where logID = #{logid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcwong.bean.Syslog">
+    update syslog
+    set fk_typeID = #{fkTypeid,jdbcType=INTEGER},
+      fk_userID = #{fkUserid,jdbcType=INTEGER},
+      procName = #{procname,jdbcType=VARCHAR},
+      IP = #{ip,jdbcType=VARCHAR},
+      checkInTime = #{checkintime,jdbcType=TIMESTAMP},
+      isException = #{isexception,jdbcType=INTEGER}
+    where logID = #{logid,jdbcType=INTEGER}
+  </update>
+</mapper>

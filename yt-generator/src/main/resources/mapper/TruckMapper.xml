@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tcwong.dao.TruckMapper">
+  <resultMap id="BaseResultMap" type="com.tcwong.bean.Truck">
+    <id column="truckID" jdbcType="INTEGER" property="truckid" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="buyDate" jdbcType="TIMESTAMP" property="buydate" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="length" jdbcType="VARCHAR" property="length" />
+    <result column="tonnage" jdbcType="INTEGER" property="tonnage" />
+    <result column="fk_teamID" jdbcType="INTEGER" property="fkTeamid" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="checkInTime" jdbcType="TIMESTAMP" property="checkintime" />
+    <result column="isDelete" jdbcType="INTEGER" property="isdelete" />
+    <result column="alterTime" jdbcType="TIMESTAMP" property="altertime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    truckID, number, buyDate, type, length, tonnage, fk_teamID, state, remark, checkInTime, 
+    isDelete, alterTime
+  </sql>
+  <select id="getAllTrucksByPage" resultMap="BaseResultMap">
+      select * from truck
+    <if test="page != null and size != null">
+     limit #{page},#{size}
+    </if>
+  </select>
+  <select id="getTotal" resultType="Long">
+    select count(*) from truck
+  </select>
+  <select id="selectByExample" parameterType="com.tcwong.bean.TruckExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from truck
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from truck
+    where truckID = #{truckid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from truck
+    where truckID = #{truckid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tcwong.bean.TruckExample">
+    delete from truck
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tcwong.bean.Truck">
+    insert into truck (truckID, number, buyDate, 
+      type, length, tonnage, 
+      fk_teamID, state, remark, 
+      checkInTime, isDelete, alterTime
+      )
+    values (#{truckid,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{buydate,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=VARCHAR}, #{length,jdbcType=VARCHAR}, #{tonnage,jdbcType=INTEGER}, 
+      #{fkTeamid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{checkintime,jdbcType=TIMESTAMP}, #{isdelete,jdbcType=INTEGER}, #{altertime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcwong.bean.Truck">
+    insert into truck
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="truckid != null">
+        truckID,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="buydate != null">
+        buyDate,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="length != null">
+        length,
+      </if>
+      <if test="tonnage != null">
+        tonnage,
+      </if>
+      <if test="fkTeamid != null">
+        fk_teamID,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="checkintime != null">
+        checkInTime,
+      </if>
+      <if test="isdelete != null">
+        isDelete,
+      </if>
+      <if test="altertime != null">
+        alterTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="truckid != null">
+        #{truckid,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="buydate != null">
+        #{buydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null">
+        #{length,jdbcType=VARCHAR},
+      </if>
+      <if test="tonnage != null">
+        #{tonnage,jdbcType=INTEGER},
+      </if>
+      <if test="fkTeamid != null">
+        #{fkTeamid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkintime != null">
+        #{checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null">
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="altertime != null">
+        #{altertime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tcwong.bean.TruckExample" resultType="java.lang.Integer">
+    select count(*) from truck
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update truck
+    <set>
+      <if test="record.truckid != null">
+        truckID = #{record.truckid,jdbcType=INTEGER},
+      </if>
+      <if test="record.number != null">
+        number = #{record.number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buydate != null">
+        buyDate = #{record.buydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.length != null">
+        length = #{record.length,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tonnage != null">
+        tonnage = #{record.tonnage,jdbcType=INTEGER},
+      </if>
+      <if test="record.fkTeamid != null">
+        fk_teamID = #{record.fkTeamid,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkintime != null">
+        checkInTime = #{record.checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isdelete != null">
+        isDelete = #{record.isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.altertime != null">
+        alterTime = #{record.altertime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update truck
+    set truckID = #{record.truckid,jdbcType=INTEGER},
+      number = #{record.number,jdbcType=VARCHAR},
+      buyDate = #{record.buydate,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=VARCHAR},
+      length = #{record.length,jdbcType=VARCHAR},
+      tonnage = #{record.tonnage,jdbcType=INTEGER},
+      fk_teamID = #{record.fkTeamid,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      checkInTime = #{record.checkintime,jdbcType=TIMESTAMP},
+      isDelete = #{record.isdelete,jdbcType=INTEGER},
+      alterTime = #{record.altertime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcwong.bean.Truck">
+    update truck
+    <set>
+      <if test="number != null">
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="buydate != null">
+        buyDate = #{buydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null">
+        length = #{length,jdbcType=VARCHAR},
+      </if>
+      <if test="tonnage != null">
+        tonnage = #{tonnage,jdbcType=INTEGER},
+      </if>
+      <if test="fkTeamid != null">
+        fk_teamID = #{fkTeamid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkintime != null">
+        checkInTime = #{checkintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null">
+        isDelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="altertime != null">
+        alterTime = #{altertime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where truckID = #{truckid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcwong.bean.Truck">
+    update truck
+    set number = #{number,jdbcType=VARCHAR},
+      buyDate = #{buydate,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      length = #{length,jdbcType=VARCHAR},
+      tonnage = #{tonnage,jdbcType=INTEGER},
+      fk_teamID = #{fkTeamid,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      checkInTime = #{checkintime,jdbcType=TIMESTAMP},
+      isDelete = #{isdelete,jdbcType=INTEGER},
+      alterTime = #{altertime,jdbcType=TIMESTAMP}
+    where truckID = #{truckid,jdbcType=INTEGER}
+  </update>
+</mapper>
