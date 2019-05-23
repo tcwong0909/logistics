@@ -106,6 +106,12 @@
     from truck
     where truckID = #{truckid,jdbcType=INTEGER}
   </select>
+  <delete id="deleteByIds" >
+   delete from truck where truckID in (
+   <foreach collection="ids" item="truckID" separator=",">
+     #{truckID}
+   </foreach>)
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from truck
     where truckID = #{truckid,jdbcType=INTEGER}

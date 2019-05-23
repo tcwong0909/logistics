@@ -7,7 +7,6 @@ import com.tcwong.service.ITruckService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service
 public class TruckServiceImpl implements ITruckService {
@@ -19,10 +18,6 @@ public class TruckServiceImpl implements ITruckService {
         return truckMapper.insert(truck);
     }
 
-    @Override
-    public List<Truck> getAllTrucks() {
-        return truckMapper.selectByExample(null);
-    }
 
     @Override
     public WebPageResponse getAllTrucksByPage(Integer page, Integer size) {
@@ -30,6 +25,19 @@ public class TruckServiceImpl implements ITruckService {
             page = (page - 1) * size;
         }
         return new WebPageResponse(truckMapper.getTotal(),truckMapper.getAllTrucksByPage(page, size));
+    }
+
+    @Override
+    public int editTruck(Truck truck) {
+        return truckMapper.updateByPrimaryKeySelective(truck);
+    }
+
+    @Override
+    public int deleteByIds(String ids) {
+
+        String[] split = ids.split(",");
+        truckMapper.deleteByIds(split);
+        return split.length;
     }
 
 

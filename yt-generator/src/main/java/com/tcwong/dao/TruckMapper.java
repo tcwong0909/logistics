@@ -32,4 +32,6 @@ public interface TruckMapper {
     List<Truck> getAllTrucksByPage(@Param("page") Integer page, @Param("size") Integer size);
 
     Long getTotal();
+
+    int deleteByIds(@Param("ids") String[] ids);
 }

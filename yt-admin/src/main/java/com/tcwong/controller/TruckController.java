@@ -7,7 +7,6 @@ import com.tcwong.service.ITruckService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @RequestMapping("/truck/")
@@ -25,13 +24,22 @@ public class TruckController {
         return WebResponse.failed("添加失败");
     }
 
-    @GetMapping("/get")
-    public WebResponse getAllTrucks() {
-        List<Truck> allTrucks = truckService.getAllTrucks();
-        if (allTrucks != null) {
-            return WebResponse.success(allTrucks);
+    @PutMapping("/put")
+    public WebResponse editTruck(@RequestBody Truck truck) {
+        int num = truckService.editTruck(truck);
+        if (num >0) {
+            return WebResponse.success("编辑成功");
         }
-        return WebResponse.failed("查询失败");
+        return WebResponse.failed("编辑失败");
+    }
+
+    @DeleteMapping("/delete/{ids}")
+    public WebResponse deleteByIds(@PathVariable String ids){
+        int num = truckService.deleteByIds(ids);
+        if (num >0){
+            return WebResponse.success("删除成功");
+        }
+        return WebResponse.failed("删除失败");
     }
 
     @GetMapping("/getAllByPage")
