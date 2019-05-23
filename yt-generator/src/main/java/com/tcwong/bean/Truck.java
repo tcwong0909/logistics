@@ -25,11 +25,23 @@ public class Truck implements Serializable {
 
     private String remark;
 
+    @JSONField(format ="yyyy-MM-dd")
     private Date checkintime;
 
     private Integer isdelete;
 
+    @JSONField(format ="yyyy-MM-dd")
     private Date altertime;
+
+    private Truckteam truckteam;
+
+    public Truckteam getTruckteam() {
+        return truckteam;
+    }
+
+    public void setTruckteam(Truckteam truckteam) {
+        this.truckteam = truckteam;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -131,24 +143,20 @@ public class Truck implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", truckid=").append(truckid);
-        sb.append(", number=").append(number);
-        sb.append(", buydate=").append(buydate);
-        sb.append(", type=").append(type);
-        sb.append(", length=").append(length);
-        sb.append(", tonnage=").append(tonnage);
-        sb.append(", fkTeamid=").append(fkTeamid);
-        sb.append(", state=").append(state);
-        sb.append(", remark=").append(remark);
-        sb.append(", checkintime=").append(checkintime);
-        sb.append(", isdelete=").append(isdelete);
-        sb.append(", altertime=").append(altertime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Truck{" +
+                "truckid=" + truckid +
+                ", number='" + number + '\'' +
+                ", buydate=" + buydate +
+                ", type='" + type + '\'' +
+                ", length='" + length + '\'' +
+                ", tonnage=" + tonnage +
+                ", fkTeamid=" + fkTeamid +
+                ", state=" + state +
+                ", remark='" + remark + '\'' +
+                ", checkintime=" + checkintime +
+                ", isdelete=" + isdelete +
+                ", altertime=" + altertime +
+                ", truckteam=" + truckteam +
+                '}';
     }
 }

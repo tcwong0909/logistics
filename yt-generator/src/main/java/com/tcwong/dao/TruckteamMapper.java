@@ -2,8 +2,9 @@ package com.tcwong.dao;
 
 import com.tcwong.bean.Truckteam;
 import com.tcwong.bean.TruckteamExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TruckteamMapper {
     int countByExample(TruckteamExample example);
@@ -27,4 +28,10 @@ public interface TruckteamMapper {
     int updateByPrimaryKeySelective(Truckteam record);
 
     int updateByPrimaryKey(Truckteam record);
+
+    int deleteByIds(@Param("ids") String[] ids);
+
+    List<?> getALlTruckTeamByPage(@Param("page") Integer page, @Param("size") Integer size);
+
+    Long getTotal();
 }

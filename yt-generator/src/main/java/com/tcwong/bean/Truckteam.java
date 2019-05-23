@@ -1,6 +1,7 @@
 package com.tcwong.bean;
 
-import io.swagger.annotations.ApiModelProperty;
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,10 +14,10 @@ public class Truckteam implements Serializable {
 
     private String remark;
 
+    @JSONField(format = "yyyy-MM-dd")
     private Date checkintime;
-
     private Integer isdelete;
-
+    @JSONField(format = "yyyy-MM-dd")
     private Date altertime;
 
     private static final long serialVersionUID = 1L;

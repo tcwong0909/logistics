@@ -7,6 +7,7 @@ import com.tcwong.service.ITruckService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Service
 public class TruckServiceImpl implements ITruckService {
@@ -15,6 +16,9 @@ public class TruckServiceImpl implements ITruckService {
     private TruckMapper truckMapper;
     @Override
     public int addTruck(Truck truck) {
+        truck.setAltertime(new Date());
+        truck.setCheckintime(new Date());
+
         return truckMapper.insert(truck);
     }
 
@@ -29,6 +33,7 @@ public class TruckServiceImpl implements ITruckService {
 
     @Override
     public int editTruck(Truck truck) {
+        truck.setAltertime(new Date());
         return truckMapper.updateByPrimaryKeySelective(truck);
     }
 

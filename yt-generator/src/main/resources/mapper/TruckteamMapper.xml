@@ -71,6 +71,26 @@
   <sql id="Base_Column_List">
     teamID, teamName, leader, remark, checkInTime, isDelete, alterTime
   </sql>
+  
+  <delete id="deleteByIds">
+    delete from truckteam where teamid in (
+    <foreach collection="ids" separator="," item="id">
+      #{id}
+    </foreach>
+    )
+  </delete>
+  
+  <select id="getTotal" resultType="Long">
+    select count(*) from truckteam
+  </select>
+
+  <select id="getALlTruckTeamByPage" resultMap="BaseResultMap">
+    select * from truckteam
+    <if test="page != null and size != null">
+      limit #{page},#{size}
+    </if>
+  </select>
+  
   <select id="selectByExample" parameterType="com.tcwong.bean.TruckteamExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
