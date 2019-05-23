@@ -81,12 +81,16 @@
     <association property="truckteam" javaType="com.tcwong.bean.Truckteam">
       <id column="teamID" jdbcType="INTEGER" property="teamid" />
       <result column="teamName" jdbcType="VARCHAR" property="teamname" />
-      <result column="checkInTime" jdbcType="TIMESTAMP" property="checkintime" />
+      <result column="leader" jdbcType="VARCHAR" property="leader" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="checkInTime" property="checkintime" jdbcType="TIMESTAMP" />
+      <result column="isDelete" jdbcType="INTEGER" property="isdelete" />
+      <result column="alterTime" jdbcType="TIMESTAMP" property="altertime" />
     </association>
   </resultMap>
 
   <select id="getAllTrucksByPage" resultMap="BaseResultMap2">
-    select * from truck t1 left join truckteam t2 on t1.fk_teamID = teamID
+    select * from truck t1 left join truckteam t2 on t1.fk_teamID = t2.teamID
     <if test="page != null and size != null">
      limit #{page},#{size}
     </if>

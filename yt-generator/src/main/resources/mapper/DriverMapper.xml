@@ -15,6 +15,12 @@
     <result column="isDelete" jdbcType="INTEGER" property="isdelete" />
     <result column="alterTime" jdbcType="TIMESTAMP" property="altertime" />
   </resultMap>
+  <resultMap id="BaseResultMap2" type="com.tcwong.bean.Driver" extends="BaseResultMap">
+    <association property="truckteam" javaType="com.tcwong.bean.Truckteam">
+      <id column="teamID" jdbcType="INTEGER" property="teamid" />
+      <result column="teamName" jdbcType="VARCHAR" property="teamname" />
+    </association>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -77,6 +83,22 @@
     driverID, name, sex, birth, phone, IDCard, fk_teamID, state, remark, checkInTime, 
     isDelete, alterTime
   </sql>
+  <select id="getAllDriverByPage" resultMap="BaseResultMap2">
+     select * from driver d1 left join truckteam t1 on d1.fk_teamID = t1.teamID
+     <if test="page != null and size != null">
+       limit #{page},#{size}
+     </if>
+  </select>
+  <select id="getTotal" resultType="Long">
+    select count(*) from driver
+  </select>
+  <delete id="deleteByIds">
+    delete from driver where driverID in (
+    <foreach collection="ids" item="id" separator=",">
+      #{id }
+    </foreach>
+    )
+  </delete>
   <select id="selectByExample" parameterType="com.tcwong.bean.DriverExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

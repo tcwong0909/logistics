@@ -2,8 +2,9 @@ package com.tcwong.dao;
 
 import com.tcwong.bean.Driver;
 import com.tcwong.bean.DriverExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface DriverMapper {
     int countByExample(DriverExample example);
@@ -27,4 +28,10 @@ public interface DriverMapper {
     int updateByPrimaryKeySelective(Driver record);
 
     int updateByPrimaryKey(Driver record);
+
+    int deleteByIds(@Param("ids") String[] ids);
+
+    List<Driver> getAllDriverByPage(@Param("page") Integer page,@Param("size") Integer size);
+
+    Long getTotal();
 }

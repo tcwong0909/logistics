@@ -1,5 +1,7 @@
 package com.tcwong.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,6 +12,7 @@ public class Driver implements Serializable {
 
     private Integer sex;
 
+    @JSONField(format = "yyyy-MM-dd")
     private Date birth;
 
     private String phone;
@@ -22,11 +25,42 @@ public class Driver implements Serializable {
 
     private String remark;
 
+    @JSONField(format = "yyyy-MM-dd")
     private Date checkintime;
 
     private Integer isdelete;
 
+    @JSONField(format = "yyyy-MM-dd")
     private Date altertime;
+
+    private Truckteam truckteam;
+
+    @Override
+    public String toString() {
+        return "Driver{" +
+                "driverid=" + driverid +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                ", birth=" + birth +
+                ", phone='" + phone + '\'' +
+                ", idcard='" + idcard + '\'' +
+                ", fkTeamid=" + fkTeamid +
+                ", state=" + state +
+                ", remark='" + remark + '\'' +
+                ", checkintime=" + checkintime +
+                ", isdelete=" + isdelete +
+                ", altertime=" + altertime +
+                ", truckteam=" + truckteam +
+                '}';
+    }
+
+    public Truckteam getTruckteam() {
+        return truckteam;
+    }
+
+    public void setTruckteam(Truckteam truckteam) {
+        this.truckteam = truckteam;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -126,26 +160,4 @@ public class Driver implements Serializable {
         this.altertime = altertime;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", driverid=").append(driverid);
-        sb.append(", name=").append(name);
-        sb.append(", sex=").append(sex);
-        sb.append(", birth=").append(birth);
-        sb.append(", phone=").append(phone);
-        sb.append(", idcard=").append(idcard);
-        sb.append(", fkTeamid=").append(fkTeamid);
-        sb.append(", state=").append(state);
-        sb.append(", remark=").append(remark);
-        sb.append(", checkintime=").append(checkintime);
-        sb.append(", isdelete=").append(isdelete);
-        sb.append(", altertime=").append(altertime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

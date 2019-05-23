@@ -16,6 +16,7 @@ public class Truckteam implements Serializable {
 
     @JSONField(format = "yyyy-MM-dd")
     private Date checkintime;
+
     private Integer isdelete;
     @JSONField(format = "yyyy-MM-dd")
     private Date altertime;
