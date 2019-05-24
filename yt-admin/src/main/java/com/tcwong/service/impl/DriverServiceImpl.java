@@ -37,11 +37,11 @@ public class DriverServiceImpl implements IDriverService {
     }
 
     @Override
-    public WebPageResponse getAllDriverByPage(Integer page, Integer size) {
+    public WebPageResponse getAllDriverByPage(Integer page, Integer size,String name,Integer fkTeamid,Integer state) {
         if (page != null && size != null){
             page = (page-1)*size;
         }
-        List<Driver> allDrivers = driverMapper.getAllDriverByPage(page, size);
-        return new WebPageResponse(driverMapper.getTotal(),allDrivers);
+        List<Driver> allDrivers = driverMapper.getAllDriverByPage(page, size,name,fkTeamid,state);
+        return new WebPageResponse(driverMapper.getTotal(name,fkTeamid,state),allDrivers);
     }
 }

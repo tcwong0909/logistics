@@ -10,5 +10,5 @@ public interface IDriverService {
 
     int editDriver(Driver driver);
 
-    WebPageResponse getAllDriverByPage(Integer page, Integer size);
+    WebPageResponse getAllDriverByPage(Integer page, Integer size,String name,Integer fkTeamid,Integer state);
 }

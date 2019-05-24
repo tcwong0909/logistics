@@ -31,7 +31,7 @@ public interface DriverMapper {
 
     int deleteByIds(@Param("ids") String[] ids);
 
-    List<Driver> getAllDriverByPage(@Param("page") Integer page,@Param("size") Integer size);
+    List<Driver> getAllDriverByPage(@Param("page") Integer page,@Param("size") Integer size,@Param("name") String name,@Param("fkTeamid") Integer fkTeamid,@Param("state") Integer state);
 
-    Long getTotal();
+    Long getTotal(@Param("name") String name,@Param("fkTeamid") Integer fkTeamid,@Param("state") Integer state);
 }

@@ -41,9 +41,9 @@ public class DriverController {
         return WebResponse.failed("修改失败");
     }
 
-    @GetMapping("/getAllByPage")
-    public WebResponse getAllDriverByPage(Integer page, Integer size) {
-        WebPageResponse pageResponse = driverService.getAllDriverByPage(page, size);
+    @PostMapping("/getAllByPage")
+    public WebResponse getAllDriverByPage(Integer page, Integer size,String name,Integer fkTeamid,Integer state) {
+        WebPageResponse pageResponse = driverService.getAllDriverByPage(page, size,name,fkTeamid,state);
         if (pageResponse != null) {
             return WebResponse.success(pageResponse, "查询成功");
         }

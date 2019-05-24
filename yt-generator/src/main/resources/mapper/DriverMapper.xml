@@ -85,12 +85,34 @@
   </sql>
   <select id="getAllDriverByPage" resultMap="BaseResultMap2">
      select * from driver d1 left join truckteam t1 on d1.fk_teamID = t1.teamID
+    <where>
+      <if test="name != null and name != '' ">
+        and name like "%"#{name,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="fkTeamid != null and fkTeamid != '' ">
+        and fk_teamID = #{fkTeamid}
+      </if>
+      <if test="state != null and state != ''">
+        and state = #{state}
+      </if>
+    </where>
      <if test="page != null and size != null">
        limit #{page},#{size}
      </if>
   </select>
   <select id="getTotal" resultType="Long">
     select count(*) from driver
+    <where>
+      <if test="name != null and name != '' ">
+        and name like "%"#{name,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="fkTeamid != null and fkTeamid != '' ">
+        and fk_teamID = #{fkTeamid}
+      </if>
+      <if test="state != null and state != ''">
+        and state = #{state}
+      </if>
+    </where>
   </select>
   <delete id="deleteByIds">
     delete from driver where driverID in (
