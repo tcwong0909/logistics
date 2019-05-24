@@ -95,8 +95,50 @@
      limit #{page},#{size}
     </if>
   </select>
+  <select id="getALLSearch" resultMap="BaseResultMap2">
+   select  * from truck t1 left join truckteam t2 on t1.fk_teamID = t2.teamID
+    <where>
+      <if test="fkTeamid != null and fkTeamid !='' ">
+        and fk_teamID = #{fkTeamid}
+      </if>
+      <if test="type != null and type !='' ">
+        and type = #{type}
+      </if>
+      <if test="number != null and number != '' ">
+        and number like "%"#{number,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
+    <if test="page !=null and size != null">
+      limit #{page},#{size}
+    </if>
+  </select>
   <select id="getTotal" resultType="Long">
     select count(*) from truck
+    <where>
+      <if test="fkTeamid != null and fkTeamid != '' ">
+        and fk_teamID = #{fkTeamid}
+      </if>
+      <if test="type != null and type != '' ">
+        and type = #{type}
+      </if>
+      <if test="number != null and number != '' ">
+        and number like "%"#{number,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
+  </select>
+  <select id="getSearchTotal" resultType="Long">
+    select count(*) from truck
+    <where>
+      <if test="fkTeamid != null and fkTeamid != '' ">
+        and fk_teamID = #{fkTeamid}
+      </if>
+      <if test="type != null and type != '' ">
+        and type = #{type}
+      </if>
+      <if test="number != null and number != '' ">
+        and number like "%"#{number,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
   </select>
   <select id="selectByExample" parameterType="com.tcwong.bean.TruckExample" resultMap="BaseResultMap">
     select

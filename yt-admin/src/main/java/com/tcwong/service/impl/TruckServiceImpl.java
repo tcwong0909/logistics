@@ -39,10 +39,17 @@ public class TruckServiceImpl implements ITruckService {
 
     @Override
     public int deleteByIds(String ids) {
-
         String[] split = ids.split(",");
         truckMapper.deleteByIds(split);
         return split.length;
+    }
+
+    @Override
+    public WebPageResponse search(Integer page, Integer size, String number, String type, Integer fkTeamid) {
+        if (page!=null && size!=null){
+            page = (page - 1) * size;
+        }
+        return new WebPageResponse(truckMapper.getSearchTotal(number,type,fkTeamid),truckMapper.getALLSearch(page,size,number,type,fkTeamid));
     }
 
 

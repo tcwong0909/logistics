@@ -12,4 +12,6 @@ public interface ITruckService {
     int  editTruck(Truck truck);
 
     int deleteByIds(String ids);
+
+    WebPageResponse search(Integer page, Integer size, String number, String type, Integer fkTeamid);
 }
