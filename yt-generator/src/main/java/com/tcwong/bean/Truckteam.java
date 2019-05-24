@@ -55,13 +55,7 @@ public class Truckteam implements Serializable {
         this.remark = remark;
     }
 
-    public Date getCheckintime() {
-        return checkintime;
-    }
 
-    public void setCheckintime(Date checkintime) {
-        this.checkintime = checkintime;
-    }
 
     public Integer getIsdelete() {
         return isdelete;
@@ -71,29 +65,32 @@ public class Truckteam implements Serializable {
         this.isdelete = isdelete;
     }
 
+    @Override
+    public String toString() {
+        return "Truckteam{" +
+                "teamid=" + teamid +
+                ", teamname='" + teamname + '\'' +
+                ", leader='" + leader + '\'' +
+                ", remark='" + remark + '\'' +
+                ", checkintime=" + checkintime +
+                ", isdelete=" + isdelete +
+                ", altertime=" + altertime +
+                '}';
+    }
+
+    public Date getCheckintime() {
+        return checkintime;
+    }
+
+    public void setCheckintime(Date checkintime) {
+        this.checkintime = checkintime;
+    }
+
     public Date getAltertime() {
         return altertime;
     }
 
     public void setAltertime(Date altertime) {
         this.altertime = altertime;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", teamid=").append(teamid);
-        sb.append(", teamname=").append(teamname);
-        sb.append(", leader=").append(leader);
-        sb.append(", remark=").append(remark);
-        sb.append(", checkintime=").append(checkintime);
-        sb.append(", isdelete=").append(isdelete);
-        sb.append(", altertime=").append(altertime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
     }
 }
