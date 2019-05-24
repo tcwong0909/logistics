@@ -42,13 +42,13 @@ public class TruckTeamController {
         }
         return WebResponse.failed("修改失败");
     }
-
-    @GetMapping("/getAllByPage")
-    public WebResponse getAllByPage(Integer page, Integer size) {
-        WebPageResponse webPageResponse = truckTeamService.getAllByPage(page, size);
+    @PostMapping("/getAllByPage")
+    public WebResponse getAllByPage(Integer page,Integer size,String teamname,String leader) {
+        WebPageResponse webPageResponse = truckTeamService.getAllByPage(page, size,teamname,leader);
         if (webPageResponse != null) {
             return WebResponse.success(webPageResponse, "查询成功");
         }
         return WebResponse.failed("查询失败");
     }
+
 }

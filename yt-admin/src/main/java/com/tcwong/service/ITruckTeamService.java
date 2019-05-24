@@ -10,5 +10,5 @@ public interface ITruckTeamService {
 
     int editTruckTeam(Truckteam truckteam);
 
-    WebPageResponse getAllByPage(Integer page, Integer size);
+    WebPageResponse getAllByPage(Integer page,Integer size,String  teamname,String leader);
 }

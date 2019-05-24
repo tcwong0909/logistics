@@ -82,10 +82,26 @@
   
   <select id="getTotal" resultType="Long">
     select count(*) from truckteam
+    <where>
+      <if test="leader != null and leader != '' ">
+        and leader like "%"#{leader,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="teamname != null and teamname !='' ">
+        and teamname like "%"#{teamname,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
   </select>
 
   <select id="getALlTruckTeamByPage" resultMap="BaseResultMap">
     select * from truckteam
+    <where>
+      <if test="leader != null and leader != '' ">
+        and leader like "%"#{leader,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="teamname != null and teamname !='' ">
+        and teamname like "%"#{teamname,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
     <if test="page != null and size != null">
       limit #{page},#{size}
     </if>

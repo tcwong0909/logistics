@@ -35,11 +35,11 @@ public class TruckTeamServiceImpl implements ITruckTeamService {
     }
 
     @Override
-    public WebPageResponse getAllByPage(Integer page, Integer size) {
+    public WebPageResponse getAllByPage(Integer page, Integer size, String teamname, String leader) {
         if (page != null && size != null) {
             page = (page-1)*size;
         }
 
-        return new WebPageResponse(truckteamMapper.getTotal(),truckteamMapper.getALlTruckTeamByPage(page,size));
+        return new WebPageResponse(truckteamMapper.getTotal(teamname,leader),truckteamMapper.getALlTruckTeamByPage(page,size,teamname,leader));
     }
 }

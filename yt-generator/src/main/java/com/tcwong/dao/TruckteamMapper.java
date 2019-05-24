@@ -31,7 +31,7 @@ public interface TruckteamMapper {
 
     int deleteByIds(@Param("ids") String[] ids);
 
-    List<?> getALlTruckTeamByPage(@Param("page") Integer page, @Param("size") Integer size);
+    List<?> getALlTruckTeamByPage(@Param("page") Integer page, @Param("size") Integer size,@Param("teamname") String teamname,@Param("leader") String leader);
 
-    Long getTotal();
+    Long getTotal(@Param("teamname") String teamname,@Param("leader") String leader);
 }
