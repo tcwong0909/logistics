@@ -89,6 +89,13 @@
     </association>
   </resultMap>
 
+  <update id="updateByIds" >
+    update truck set state = 2 where truckID in (
+    <foreach collection="ids" separator="," item="id">
+      #{id}
+    </foreach>
+    )
+  </update>
   <select id="getAllTrucksByPage" resultMap="BaseResultMap2">
     select t1.*,t2.teamName,t2.checkInTime checkTeamTime ,t2.alterTime alterTeamTime from truck t1 left join truckteam t2 on t1.fk_teamID = t2.teamID
     <if test="page != null and size != null">

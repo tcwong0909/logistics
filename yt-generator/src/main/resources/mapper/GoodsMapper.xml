@@ -71,6 +71,13 @@
   <sql id="Base_Column_List">
     goodsID, goodsName, amount, weight, volume, fk_carriersID, isDelete
   </sql>
+  <delete id="deleteByFkIds">
+    delete from goods where fk_carriersID in (
+    <foreach collection="fkIds" separator="," item="fkid">
+      #{fkid}
+    </foreach>
+    )
+  </delete>
   <select id="selectByExample" parameterType="com.tcwong.bean.GoodsExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

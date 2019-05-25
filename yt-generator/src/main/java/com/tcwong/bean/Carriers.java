@@ -1,6 +1,7 @@
 package com.tcwong.bean;
 
-import io.swagger.annotations.ApiModelProperty;
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,11 +23,13 @@ public class Carriers implements Serializable {
     private String receivelinkman;
 
     private String receivephone;
-
+    @JSONField(format = "yyyy-MM-dd")
     private Date leaverdate;
 
+    @JSONField(format = "yyyy-MM-dd")
     private Date receivedate;
 
+    @JSONField(format = "yyyy-MM-dd")
     private Integer finishedstate;
 
     private Float insurancecost;
@@ -41,11 +44,50 @@ public class Carriers implements Serializable {
 
     private Integer fkUserid;
 
+    @JSONField(format = "yyyy-MM-dd")
     private Date checkintime;
 
     private Integer isdelete;
-
+    @JSONField(format = "yyyy-MM-dd")
     private Date altertime;
+
+    private Goods goods;
+
+    @Override
+    public String toString() {
+        return "Carriers{" +
+                "carriersid=" + carriersid +
+                ", sendcompany='" + sendcompany + '\'' +
+                ", sendaddress='" + sendaddress + '\'' +
+                ", sendlinkman='" + sendlinkman + '\'' +
+                ", sendphone='" + sendphone + '\'' +
+                ", receivecompany='" + receivecompany + '\'' +
+                ", fkReceiveaddress='" + fkReceiveaddress + '\'' +
+                ", receivelinkman='" + receivelinkman + '\'' +
+                ", receivephone='" + receivephone + '\'' +
+                ", leaverdate=" + leaverdate +
+                ", receivedate=" + receivedate +
+                ", finishedstate=" + finishedstate +
+                ", insurancecost=" + insurancecost +
+                ", transportcost=" + transportcost +
+                ", othercost=" + othercost +
+                ", totalcost=" + totalcost +
+                ", remark='" + remark + '\'' +
+                ", fkUserid=" + fkUserid +
+                ", checkintime=" + checkintime +
+                ", isdelete=" + isdelete +
+                ", altertime=" + altertime +
+                ", goods=" + goods +
+                '}';
+    }
+
+    public Goods getGoods() {
+        return goods;
+    }
+
+    public void setGoods(Goods goods) {
+        this.goods = goods;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -217,35 +259,4 @@ public class Carriers implements Serializable {
         this.altertime = altertime;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", carriersid=").append(carriersid);
-        sb.append(", sendcompany=").append(sendcompany);
-        sb.append(", sendaddress=").append(sendaddress);
-        sb.append(", sendlinkman=").append(sendlinkman);
-        sb.append(", sendphone=").append(sendphone);
-        sb.append(", receivecompany=").append(receivecompany);
-        sb.append(", fkReceiveaddress=").append(fkReceiveaddress);
-        sb.append(", receivelinkman=").append(receivelinkman);
-        sb.append(", receivephone=").append(receivephone);
-        sb.append(", leaverdate=").append(leaverdate);
-        sb.append(", receivedate=").append(receivedate);
-        sb.append(", finishedstate=").append(finishedstate);
-        sb.append(", insurancecost=").append(insurancecost);
-        sb.append(", transportcost=").append(transportcost);
-        sb.append(", othercost=").append(othercost);
-        sb.append(", totalcost=").append(totalcost);
-        sb.append(", remark=").append(remark);
-        sb.append(", fkUserid=").append(fkUserid);
-        sb.append(", checkintime=").append(checkintime);
-        sb.append(", isdelete=").append(isdelete);
-        sb.append(", altertime=").append(altertime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

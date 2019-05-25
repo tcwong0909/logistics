@@ -2,8 +2,9 @@ package com.tcwong.dao;
 
 import com.tcwong.bean.Carriers;
 import com.tcwong.bean.CarriersExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CarriersMapper {
     int countByExample(CarriersExample example);
@@ -27,4 +28,12 @@ public interface CarriersMapper {
     int updateByPrimaryKeySelective(Carriers record);
 
     int updateByPrimaryKey(Carriers record);
+
+    Long getTotal(@Param("sendcompany") String sendcompany, @Param("receivecompany") String receivecompany, @Param("finishedstate") Integer finishedstate);
+
+    List<?> getAllByPage(@Param("page") Integer page, @Param("size") Integer size, @Param("sendcompany") String sendcompany, @Param("receivecompany") String receivecompany, @Param("finishedstate") Integer finishedstate);
+
+    int deleteByIds(@Param("carrierIds") String[] carrierIds);
+
+    int updateByIds(@Param("ids") String toString);
 }

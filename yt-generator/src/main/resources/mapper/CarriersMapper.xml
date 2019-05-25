@@ -87,6 +87,63 @@
     receiveLinkMan, receivePhone, leaverDate, receiveDate, finishedState, insuranceCost, 
     transportCost, otherCost, totalCost, remark, fk_userID, checkInTime, isDelete, alterTime
   </sql>
+  <resultMap id="BaseResultMap2" type="com.tcwong.bean.Carriers" extends="BaseResultMap">
+    <association property="goods" javaType="com.tcwong.bean.Goods">
+      <id column="goodsID" jdbcType="INTEGER" property="goodsid" />
+      <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+      <result column="amount" jdbcType="INTEGER" property="amount" />
+      <result column="weight" jdbcType="REAL" property="weight" />
+      <result column="volume" jdbcType="REAL" property="volume" />
+      <result column="fk_carriersID" jdbcType="INTEGER" property="fkCarriersid" />
+    </association>
+  </resultMap>
+
+  <update id="updateByIds">
+    update carriers set finishedState = 0 where carriersID in (
+    <foreach collection="ids" item="id" separator=",">
+      #{id}
+    </foreach>
+    )
+  </update>
+
+  <delete id="deleteByIds" >
+    delete from carriers where carriersID in (
+    <foreach collection="carrierIds" separator="," item="id">
+      #{id}
+    </foreach>
+    )
+  </delete>
+  <select id="getTotal" resultType="Long">
+    select count(*) from carriers
+    <where>
+      <if test="sendcompany != null and sendcompany != ''">
+        and sendCompany like "%"#{sendcompany,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="receivecompany != null and receivecompany != '' ">
+        and receivecompany like "%"#{receivecompany,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="finishedstate != null and finishedstate != '' ">
+        and finishedstate = #{finishedstate}
+      </if>
+    </where>
+  </select>
+  <select id="getAllByPage" resultMap="BaseResultMap2">
+    select * from carriers c1 left join goods g1 on  c1.carriersID = g1.fk_carriersID
+    <where>
+      <if test="sendcompany != null and sendcompany != ''">
+        and sendCompany like "%"#{sendcompany,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="receivecompany != null and receivecompany != '' ">
+        and receivecompany like "%"#{receivecompany,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="finishedstate != null and finishedstate != '' ">
+        and finishedstate = #{finishedstate}
+      </if>
+    </where>
+    <if test="page != null and size != null">
+      limit #{page},#{size}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.tcwong.bean.CarriersExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -117,7 +174,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.tcwong.bean.Carriers">
+  <insert id="insert" parameterType="com.tcwong.bean.Carriers" useGeneratedKeys="true" keyProperty="carriersid">
     insert into carriers (carriersID, sendCompany, sendAddress, 
       sendLinkMan, sendPhone, receiveCompany, 
       fk_receiveAddress, receiveLinkMan, receivePhone, 
@@ -135,7 +192,7 @@
       #{checkintime,jdbcType=TIMESTAMP}, #{isdelete,jdbcType=INTEGER}, #{altertime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.tcwong.bean.Carriers">
+  <insert id="insertSelective" parameterType="com.tcwong.bean.Carriers" useGeneratedKeys="true" keyProperty="carriersid">
     insert into carriers
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="carriersid != null">

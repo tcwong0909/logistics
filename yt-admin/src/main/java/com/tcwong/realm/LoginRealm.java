@@ -2,6 +2,7 @@ package com.tcwong.realm;
 
 import com.tcwong.bean.User;
 import com.tcwong.service.ILoginService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -29,7 +30,7 @@ public class LoginRealm extends AuthorizingRealm {
         String username = (String)authenticationToken.getPrincipal();
         List<User> userList = loginService.login(username);
         User user = userList.get(0);
-
+        SecurityUtils.getSubject().getSession().setAttribute("user",user);
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(), ByteSource.Util.bytes(user.getAccount()), getName());
         return info;
     }

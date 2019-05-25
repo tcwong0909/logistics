@@ -1,6 +1,7 @@
 package com.tcwong.service.impl;
 
 import com.tcwong.bean.Truck;
+import com.tcwong.bean.TruckExample;
 import com.tcwong.common.WebPageResponse;
 import com.tcwong.dao.TruckMapper;
 import com.tcwong.service.ITruckService;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TruckServiceImpl implements ITruckService {
@@ -50,6 +52,15 @@ public class TruckServiceImpl implements ITruckService {
             page = (page - 1) * size;
         }
         return new WebPageResponse(truckMapper.getSearchTotal(number,type,fkTeamid),truckMapper.getALLSearch(page,size,number,type,fkTeamid));
+    }
+
+    @Override
+    public List<Truck> selectTruck() {
+        TruckExample truckExample = new TruckExample();
+        TruckExample.Criteria criteria = truckExample.createCriteria();
+        criteria.andStateEqualTo(2);
+        List<Truck> trucks = truckMapper.selectByExample(truckExample);
+        return trucks;
     }
 
 

@@ -16,4 +16,22 @@ public class GoodsServiceImpl implements IGoodsService {
     public List<Goods> getAll() {
         return goodsMapper.selectByExample(null);
     }
+
+    @Override
+    public int addGoods(Goods goods) {
+        return goodsMapper.insert(goods);
+    }
+
+    @Override
+    public int editGoods(Goods goods) {
+        return goodsMapper.insertSelective(goods);
+    }
+
+    @Override
+    public int deleteGoods(String ids) {
+        String[] fkIds = ids.split(",");
+        goodsMapper.deleteByFkIds(fkIds);
+        return fkIds.length;
+
+    }
 }

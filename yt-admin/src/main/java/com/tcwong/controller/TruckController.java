@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
 
 @RestController
 @RequestMapping("/truck/")
@@ -77,5 +78,15 @@ public class TruckController {
         }
         return WebResponse.failed("为查询到结果");
     }
+
+    @RequestMapping("/getTrucks")
+    public WebResponse selectTruck(){
+        List<Truck> trucks = truckService.selectTruck();
+        if (trucks != null){
+            return WebResponse.success(trucks);
+        }
+        return WebResponse.failed("查询失败");
+    }
+
 
 }

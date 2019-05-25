@@ -79,6 +79,77 @@
     schedulingID, startTime, fk_carriersID, fk_truckID, oilCost, toll, fine, otherCost, 
     totalCost, fk_userID, remark, checkInTime, isDelete, alterTime
   </sql>
+  <resultMap id="BaseResultMap2" type="com.tcwong.bean.Scheduling" extends="BaseResultMap">
+    <association property="carriers" javaType="com.tcwong.bean.Carriers">
+      <id column="carriersID" jdbcType="INTEGER" property="carriersid" />
+      <result column="sendCompany" jdbcType="VARCHAR" property="sendcompany" />
+      <result column="sendAddress" jdbcType="VARCHAR" property="sendaddress" />
+      <result column="sendLinkMan" jdbcType="VARCHAR" property="sendlinkman" />
+      <result column="sendPhone" jdbcType="VARCHAR" property="sendphone" />
+      <result column="receiveCompany" jdbcType="VARCHAR" property="receivecompany" />
+      <result column="fk_receiveAddress" jdbcType="VARCHAR" property="fkReceiveaddress" />
+      <result column="receiveLinkMan" jdbcType="VARCHAR" property="receivelinkman" />
+      <result column="receivePhone" jdbcType="VARCHAR" property="receivephone" />
+      <result column="leaverDate" jdbcType="TIMESTAMP" property="leaverdate" />
+      <result column="receiveDate" jdbcType="TIMESTAMP" property="receivedate" />
+      <result column="finishedState" jdbcType="INTEGER" property="finishedstate" />
+      <result column="insuranceCost" jdbcType="REAL" property="insurancecost" />
+      <result column="transportCost" jdbcType="REAL" property="transportcost" />
+      <result column="otherCost" jdbcType="REAL" property="othercost" />
+      <result column="totalCost" jdbcType="REAL" property="totalcost" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="fk_userID" jdbcType="INTEGER" property="fkUserid" />
+      <result column="checkInTime" jdbcType="TIMESTAMP" property="checkintime" />
+      <result column="isDelete" jdbcType="INTEGER" property="isdelete" />
+      <result column="alterTime" jdbcType="TIMESTAMP" property="altertime" />
+    </association>
+  </resultMap>
+  <select id="getTotal" resultType="Long">
+    select count(*) from scheduling s1 , carriers c1
+    <where>
+      s1.fk_carriersID = c1.carriersID
+      <if test="fkCarriersid != null and fkCarriersid != '' ">
+        and s1.fk_carriersID = #{fkCarriersid}
+      </if>
+      <if test="schedulingid != null and schedulingid != '' ">
+        and s1.schedulingID = #{schedulingid}
+      </if>
+      <if test="sendcompany != null and sendcompany != '' ">
+        and s2.sendCompany like "%"#{sendcompany,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="receivecompany != null and receivecompany != '' ">
+        and s2.receivecompany like "%"#{receiveCompany,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
+  </select>
+  <select id="getAllByPage" resultMap="BaseResultMap2">
+    select * from scheduling s1 , carriers c1
+    <where>
+      s1.fk_carriersID = c1.carriersID
+      <if test="fkCarriersid != null and fkCarriersid != '' ">
+        and s1.fk_carriersID = #{fkCarriersid}
+      </if>
+      <if test="schedulingid != null and schedulingid != '' ">
+        and s1.schedulingID = #{schedulingid}
+      </if>
+      <if test="sendcompany != null and sendcompany != '' ">
+        and s2.sendCompany like "%"#{sendcompany,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="receivecompany != null and receivecompany != '' ">
+        and s2.receivecompany like "%"#{receiveCompany,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
+    <if test="page != null and size != null ">
+      limit #{page},#{size}
+    </if>
+  </select>
+  <delete id="deleteByIds">
+    delete from scheduling where schedulingID in (
+    <foreach collection="ids" item="id" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
   <select id="selectByExample" parameterType="com.tcwong.bean.SchedulingExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

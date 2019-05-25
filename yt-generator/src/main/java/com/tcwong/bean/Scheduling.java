@@ -1,6 +1,5 @@
 package com.tcwong.bean;
 
-import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -32,6 +31,37 @@ public class Scheduling implements Serializable {
     private Integer isdelete;
 
     private Date altertime;
+
+    private Carriers carriers;
+
+    @Override
+    public String toString() {
+        return "Scheduling{" +
+                "schedulingid=" + schedulingid +
+                ", starttime=" + starttime +
+                ", fkCarriersid=" + fkCarriersid +
+                ", fkTruckid=" + fkTruckid +
+                ", oilcost=" + oilcost +
+                ", toll=" + toll +
+                ", fine=" + fine +
+                ", othercost=" + othercost +
+                ", totalcost=" + totalcost +
+                ", fkUserid=" + fkUserid +
+                ", remark='" + remark + '\'' +
+                ", checkintime=" + checkintime +
+                ", isdelete=" + isdelete +
+                ", altertime=" + altertime +
+                ", carriers=" + carriers +
+                '}';
+    }
+
+    public Carriers getCarriers() {
+        return carriers;
+    }
+
+    public void setCarriers(Carriers carriers) {
+        this.carriers = carriers;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -147,28 +177,4 @@ public class Scheduling implements Serializable {
         this.altertime = altertime;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", schedulingid=").append(schedulingid);
-        sb.append(", starttime=").append(starttime);
-        sb.append(", fkCarriersid=").append(fkCarriersid);
-        sb.append(", fkTruckid=").append(fkTruckid);
-        sb.append(", oilcost=").append(oilcost);
-        sb.append(", toll=").append(toll);
-        sb.append(", fine=").append(fine);
-        sb.append(", othercost=").append(othercost);
-        sb.append(", totalcost=").append(totalcost);
-        sb.append(", fkUserid=").append(fkUserid);
-        sb.append(", remark=").append(remark);
-        sb.append(", checkintime=").append(checkintime);
-        sb.append(", isdelete=").append(isdelete);
-        sb.append(", altertime=").append(altertime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }
