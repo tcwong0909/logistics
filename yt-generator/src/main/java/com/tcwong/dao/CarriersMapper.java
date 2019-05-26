@@ -35,5 +35,5 @@ public interface CarriersMapper {
 
     int deleteByIds(@Param("carrierIds") String[] carrierIds);
 
-    int updateByIds(@Param("ids") String toString);
+    int updateByIds(@Param("ids") String[] toString);
 }

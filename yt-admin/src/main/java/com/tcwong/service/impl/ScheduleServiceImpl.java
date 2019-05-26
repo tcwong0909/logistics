@@ -62,13 +62,22 @@ public class ScheduleServiceImpl implements IScheduleService {
             Integer schedulingid = schedule.getSchedulingid();
             Integer fkTruckid = schedule.getFkTruckid();
             Integer fkCarriersid = schedule.getFkCarriersid();
-            schedulingidBuilder.append(schedulingid).append(",");
-            fkTruckidBuilder.append(fkTruckid).append(",");
-            fkCarriersidBuilder.append(fkCarriersid).append(",");
+            if (schedulingid != null) {
+                schedulingidBuilder.append(schedulingid).append(",");
+            }
+            if (fkTruckid != null) {
+                fkTruckidBuilder.append(fkTruckid).append(",");
+            }
+            if (fkCarriersid != null) {
+                fkCarriersidBuilder.append(fkCarriersid).append(",");
+            }
         });
-        schedulingMapper.deleteByIds(schedulingidBuilder.toString());
-        carriersMapper.updateByIds(fkCarriersidBuilder.toString());
-        truckMapper.updateByIds(fkTruckidBuilder.toString());
+        String[] schedulingIds = schedulingidBuilder.toString().split(",");
+        String[] carriersIds = fkCarriersidBuilder.toString().split(",");
+        String[] truckIds = fkTruckidBuilder.toString().split(",");
+        schedulingMapper.deleteByIds(schedulingIds);
+        carriersMapper.updateByIds(carriersIds);
+        truckMapper.updateByIds(truckIds);
         return size;
     }
 }

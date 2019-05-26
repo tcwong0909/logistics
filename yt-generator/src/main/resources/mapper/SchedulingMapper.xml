@@ -115,10 +115,10 @@
         and s1.schedulingID = #{schedulingid}
       </if>
       <if test="sendcompany != null and sendcompany != '' ">
-        and s2.sendCompany like "%"#{sendcompany,jdbcType=VARCHAR}"%"
+        and c1.sendCompany like "%"#{sendcompany,jdbcType=VARCHAR}"%"
       </if>
       <if test="receivecompany != null and receivecompany != '' ">
-        and s2.receivecompany like "%"#{receiveCompany,jdbcType=VARCHAR}"%"
+        and c1.receiveCompany like "%"#{receivecompany,jdbcType=VARCHAR}"%"
       </if>
     </where>
   </select>
@@ -133,10 +133,10 @@
         and s1.schedulingID = #{schedulingid}
       </if>
       <if test="sendcompany != null and sendcompany != '' ">
-        and s2.sendCompany like "%"#{sendcompany,jdbcType=VARCHAR}"%"
+        and c1.sendCompany like "%"#{sendcompany,jdbcType=VARCHAR}"%"
       </if>
       <if test="receivecompany != null and receivecompany != '' ">
-        and s2.receivecompany like "%"#{receiveCompany,jdbcType=VARCHAR}"%"
+        and c1.receiveCompany like "%"#{receivecompany,jdbcType=VARCHAR}"%"
       </if>
     </where>
     <if test="page != null and size != null ">

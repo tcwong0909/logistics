@@ -39,5 +39,5 @@ public interface TruckMapper {
 
     List<Truck> getALLSearch(@Param("page") Integer page, @Param("size") Integer size, @Param("number") String number, @Param("type") String type, @Param("fkTeamid") Integer fkTeamid);
 
-    int updateByIds(@Param("ids") String toString);
+    int updateByIds(@Param("ids") String[] toString);
 }

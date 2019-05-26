@@ -11,7 +11,8 @@
 		<context:component-scan base-package="com.tcwong.controller" use-default-filters="false">
 			<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		</context:component-scan>
-		
+		<!--<mvc:default-servlet-handler />-->
+		<!--<mvc:resources mapping="/**" location="/"/>-->
 		<!--注册fastJSON-->
 		<mvc:annotation-driven>
 			<mvc:message-converters>
