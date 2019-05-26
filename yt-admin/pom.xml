@@ -47,6 +47,9 @@
 
 
     </dependencies>
+    <build>
+        <finalName>tc</finalName>
+    </build>
 
 
 </project>
