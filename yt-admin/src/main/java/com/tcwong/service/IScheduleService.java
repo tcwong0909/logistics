@@ -11,4 +11,6 @@ public interface IScheduleService {
     WebPageResponse getSchedules(Integer page, Integer size, Integer schedulingid, Integer fkCarriersid, String sendcompany, String receivecompany);
 
     int deleteMore(List<Scheduling> scheduleList);
+
+    int addCost(Scheduling scheduling);
 }

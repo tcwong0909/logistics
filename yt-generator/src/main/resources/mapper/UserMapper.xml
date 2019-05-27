@@ -72,10 +72,64 @@
       </foreach>
     </where>
   </sql>
+  
+  <resultMap id="BaseResultMap2" type="com.tcwong.bean.User" extends="BaseResultMap">
+    <association property="role" javaType="com.tcwong.bean.Role">
+      <id column="roleID" jdbcType="INTEGER" property="roleid" />
+      <result column="roleName" jdbcType="VARCHAR" property="rolename" />
+      <result column="rolePurview" jdbcType="VARCHAR" property="rolepurview" />
+    </association>
+  </resultMap>
   <sql id="Base_Column_List">
     userID, userName, sex, account, password, phone, email, fk_roleID, checkInTime, isDelete, 
     alterTime
   </sql>
+  <delete id="deleteByIds">
+    delete from user where userID in (
+    <foreach collection="ids" item="id" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+
+  <select id="getAllByPage" resultMap="BaseResultMap2">
+    select * from user t1 left join role t2 on t1.fk_roleID = t2.roleID
+    <where>
+      <if test="account != null and account != '' ">
+        and account like "%"#{account,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="sex != null and sex != ''">
+        and sex = #{sex}
+      </if>
+      <if test="username != null and username != ''">
+        and userName like "%"#{username,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="fkRoleid != null and fkRoleid != ''">
+        and fk_roleID = #{fkRoleid}
+      </if>
+    </where>
+    <if test="page != null and size != null">
+      limit #{page},#{size}
+    </if>
+  </select>
+
+  <select id="getTotal" resultType="Long">
+    select count(*) from user
+    <where>
+      <if test="account != null and account != '' ">
+        and account like "%"#{account,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="sex != null and sex != ''">
+        and sex = #{sex}
+      </if>
+      <if test="username != null and username != ''">
+        and userName like "%"#{username,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="fkRoleid != null and fkRoleid != ''">
+        and fk_roleID = #{fkRoleid}
+      </if>
+    </where>
+  </select>
   <select id="selectByExample" parameterType="com.tcwong.bean.UserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

@@ -80,4 +80,10 @@ public class ScheduleServiceImpl implements IScheduleService {
         truckMapper.updateByIds(truckIds);
         return size;
     }
+
+    @Override
+    public int addCost(Scheduling scheduling) {
+        scheduling.setAltertime(new Date());
+        return schedulingMapper.updateByPrimaryKeySelective(scheduling);
+    }
 }

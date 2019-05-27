@@ -1,6 +1,5 @@
 package com.tcwong.bean;
 
-import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,6 +25,34 @@ public class User implements Serializable {
     private Integer isdelete;
 
     private Date altertime;
+
+    private Role role;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userid=" + userid +
+                ", username='" + username + '\'' +
+                ", sex=" + sex +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", fkRoleid=" + fkRoleid +
+                ", checkintime=" + checkintime +
+                ", isdelete=" + isdelete +
+                ", altertime=" + altertime +
+                ", role=" + role +
+                '}';
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -117,25 +144,4 @@ public class User implements Serializable {
         this.altertime = altertime;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", userid=").append(userid);
-        sb.append(", username=").append(username);
-        sb.append(", sex=").append(sex);
-        sb.append(", account=").append(account);
-        sb.append(", password=").append(password);
-        sb.append(", phone=").append(phone);
-        sb.append(", email=").append(email);
-        sb.append(", fkRoleid=").append(fkRoleid);
-        sb.append(", checkintime=").append(checkintime);
-        sb.append(", isdelete=").append(isdelete);
-        sb.append(", altertime=").append(altertime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

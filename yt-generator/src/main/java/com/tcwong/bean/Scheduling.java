@@ -1,11 +1,14 @@
 package com.tcwong.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class Scheduling implements Serializable {
     private Integer schedulingid;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date starttime;
 
     private Integer fkCarriersid;
@@ -26,10 +29,12 @@ public class Scheduling implements Serializable {
 
     private String remark;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date checkintime;
 
     private Integer isdelete;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date altertime;
 
     private Carriers carriers;
