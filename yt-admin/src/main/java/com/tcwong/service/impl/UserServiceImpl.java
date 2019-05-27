@@ -4,8 +4,12 @@ import com.tcwong.bean.User;
 import com.tcwong.common.WebPageResponse;
 import com.tcwong.dao.UserMapper;
 import com.tcwong.service.IUserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -13,9 +17,11 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
     @Override
     public int addUser(User user) {
+        user.setPassword((new Md5Hash("123456",user.getAccount(),1024)).toString());
+        user.setCheckintime(new Date());
+        user.setAltertime(new Date());
         return userMapper.insert(user);
     }
-
     @Override
     public int deleteByIds(String ids) {
         String[] split = ids.split(",");
@@ -26,6 +32,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public int editUser(User user) {
+        user.setAltertime(new Date());
         return userMapper.updateByPrimaryKeySelective(user);
     }
 
@@ -39,4 +46,22 @@ public class UserServiceImpl implements IUserService {
         return new WebPageResponse(userMapper.getTotal(username,account,sex,fkRoleid),userMapper.getAllByPage(page,
                 size,username,account,sex,fkRoleid));
     }
+
+    @Override
+    public int editPassword(User user) {
+        Integer userid = ((User) (SecurityUtils.getSubject().getSession()
+                .getAttribute("user"))).getUserid();
+        user.setUserid(userid);
+        String password = userMapper.selectByPrimaryKey(user.getUserid()).getPassword();
+        String oldPassword = new Md5Hash(user.getPassword(), ((User) (SecurityUtils.getSubject().getSession()
+                .getAttribute("user"))).getAccount(), 1024).toString();
+        if (password != oldPassword) {
+            return 0;
+        }
+        Md5Hash md5Hash = new Md5Hash(user.getPassword(), ((User) (SecurityUtils.getSubject().getSession().getAttribute("user"))).getAccount(), 1024);
+        user.setPassword(md5Hash.toString());
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+
 }

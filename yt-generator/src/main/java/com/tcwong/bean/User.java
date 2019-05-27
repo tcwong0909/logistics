@@ -14,6 +14,8 @@ public class User implements Serializable {
 
     private String password;
 
+    private String oldPassword;
+
     private String phone;
 
     private String email;
@@ -36,6 +38,7 @@ public class User implements Serializable {
                 ", sex=" + sex +
                 ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
+                ", oldPassword='" + oldPassword + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", fkRoleid=" + fkRoleid +
@@ -46,6 +49,13 @@ public class User implements Serializable {
                 '}';
     }
 
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
     public Role getRole() {
         return role;
     }

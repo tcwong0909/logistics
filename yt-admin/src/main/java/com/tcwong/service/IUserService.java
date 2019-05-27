@@ -11,4 +11,6 @@ public interface IUserService {
     int editUser(User user);
 
     WebPageResponse getAllByPage(Integer page, Integer size, String username, String account, Integer sex, Integer fkRoleid);
+
+    int editPassword(User user);
 }

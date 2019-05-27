@@ -16,7 +16,9 @@
 		<!--注册fastJSON-->
 		<mvc:annotation-driven>
 			<mvc:message-converters>
-				<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
+				<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+					<property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+				</bean>
 			</mvc:message-converters>
 		</mvc:annotation-driven>
 
