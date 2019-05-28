@@ -31,5 +31,10 @@ public interface ContactMapper {
 
     int deleteByIds(@Param("ids") String[] split);
 
-    List<Contact> getAll();
+    Long getTotal(@Param("fkTruckid")Integer fkTruckid,@Param("fkDriverid")Integer fkDriverid,
+                  @Param("drivername") String drivername,@Param("teamname")String teamname,@Param("bindId")Integer bindId);
+    List<Contact> getAll(@Param("page") Integer page,@Param("size")Integer size,@Param("fkTruckid")Integer fkTruckid,@Param("fkDriverid")Integer fkDriverid,
+                         @Param("drivername") String drivername,@Param("teamname")String teamname,@Param("bindId")Integer bindId);
+
+    int unbindTrucks(@Param("ids") String[] split);
 }

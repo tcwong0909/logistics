@@ -98,10 +98,69 @@
       <result column="leader" jdbcType="VARCHAR" property="leader" />
     </association>
   </resultMap>
+
+  <update id="unbindTrucks" >
+    update contact set fk_truckID = null where contactid in (
+    <foreach collection="ids" item="id" separator=",">
+      #{id}
+    </foreach>
+     )
+  </update>
+
+  <select id="getTotal" resultType="Long">
+
+    select count(*) from contact c1 left join driver d1 on c1.fk_driverID = d1.driverID
+    left join truck t1 on  c1.fk_truckID=t1.truckID
+    left join truckteam t2 on d1.fk_teamID = t2.teamID
+    <where>
+      <if test="fkTruckid != null and fkTruckid !='' ">
+        and c1.fk_driverID = #{fkTruckid}
+      </if>
+      <if test="fkDriverid != null and fkDriverid != ''">
+        and c1.fk_truckID = #{fkDriverid}
+      </if>
+      <if test="drivername != null and drivername != ''">
+        and d1.name like "%"#{drivername,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="teamname != null and teamname !=''">
+        and t2.teamName like "%"#{teamname,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="bindId ==1">
+        and isnull(c1.fk_truckID)
+      </if>
+      <if test="bindId ==2">
+        and  c1.fk_truckID != ''
+      </if>
+    </where>
+  </select>
+
   <select id="getAll" resultMap="BaseResultMap2">
     select * from contact c1 left join driver d1 on c1.fk_driverID = d1.driverID
     left join truck t1 on  c1.fk_truckID=t1.truckID
-    left join truckteam t2 on d1.fk_teamID = t2.teamID;
+    left join truckteam t2 on d1.fk_teamID = t2.teamID
+    <where>
+      <if test="fkTruckid != null and fkTruckid !='' ">
+        and c1.fk_driverID = #{fkTruckid}
+      </if>
+      <if test="fkDriverid != null and fkDriverid != ''">
+        and c1.fk_truckID = #{fkDriverid}
+      </if>
+      <if test="drivername != null and drivername != ''">
+        and d1.name like "%"#{drivername,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="teamname != null and teamname !=''">
+        and t2.teamName like "%"#{teamname,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="bindId ==1">
+        and isnull(c1.fk_truckID)
+      </if>
+      <if test="bindId ==2">
+        and  c1.fk_truckID != ''
+      </if>
+    </where>
+    <if test="page != null and size != null">
+      limit #{page},#{size}
+    </if>
   </select>
   <select id="selectByExample" parameterType="com.tcwong.bean.ContactExample" resultMap="BaseResultMap">
     select
