@@ -35,6 +35,13 @@
       </foreach>
     </where>
   </sql>
+  <delete id="deleteByIds">
+    delete from contact where fk_driverID in(
+    <foreach collection="ids" separator="," item="id">
+      #{id}
+    </foreach>
+    )
+  </delete>
   <sql id="Update_By_Example_Where_Clause">
     <where>
       <foreach collection="example.oredCriteria" item="criteria" separator="or">
@@ -67,6 +74,35 @@
   <sql id="Base_Column_List">
     contactID, fk_truckID, fk_driverID
   </sql>
+  <resultMap id="BaseResultMap2" type="com.tcwong.bean.Contact" extends="BaseResultMap">
+    <association property="truck" javaType="com.tcwong.bean.Truck">
+      <id column="truckID" jdbcType="INTEGER" property="truckid" />
+      <result column="number" jdbcType="VARCHAR" property="number" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="tonnage" jdbcType="INTEGER" property="tonnage" />
+      <result column="fk_teamID" jdbcType="INTEGER" property="fkTeamid" />
+      <result column="state" jdbcType="INTEGER" property="state" />
+    </association>
+    <association property="driver" javaType="com.tcwong.bean.Driver">
+      <id column="driverID" jdbcType="INTEGER" property="driverid" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="sex" jdbcType="INTEGER" property="sex" />
+      <result column="phone" jdbcType="VARCHAR" property="phone" />
+      <result column="IDCard" jdbcType="VARCHAR" property="idcard" />
+      <result column="fk_teamID" jdbcType="INTEGER" property="fkTeamid" />
+      <result column="state" jdbcType="INTEGER" property="state" />
+    </association>
+    <association property="truckteam" javaType="com.tcwong.bean.Truckteam">
+      <id column="teamID" jdbcType="INTEGER" property="teamid" />
+      <result column="teamName" jdbcType="VARCHAR" property="teamname" />
+      <result column="leader" jdbcType="VARCHAR" property="leader" />
+    </association>
+  </resultMap>
+  <select id="getAll" resultMap="BaseResultMap2">
+    select * from contact c1 left join driver d1 on c1.fk_driverID = d1.driverID
+    left join truck t1 on  c1.fk_truckID=t1.truckID
+    left join truckteam t2 on d1.fk_teamID = t2.teamID;
+  </select>
   <select id="selectByExample" parameterType="com.tcwong.bean.ContactExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

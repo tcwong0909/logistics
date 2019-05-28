@@ -2,8 +2,9 @@ package com.tcwong.dao;
 
 import com.tcwong.bean.Contact;
 import com.tcwong.bean.ContactExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ContactMapper {
     int countByExample(ContactExample example);
@@ -27,4 +28,8 @@ public interface ContactMapper {
     int updateByPrimaryKeySelective(Contact record);
 
     int updateByPrimaryKey(Contact record);
+
+    int deleteByIds(@Param("ids") String[] split);
+
+    List<Contact> getAll();
 }

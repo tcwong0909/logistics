@@ -151,7 +151,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.tcwong.bean.Driver">
+  <insert id="insert" parameterType="com.tcwong.bean.Driver" keyProperty="driverid" useGeneratedKeys="true">
     insert into driver (driverID, name, sex, 
       birth, phone, IDCard, 
       fk_teamID, state, remark, 
@@ -163,7 +163,7 @@
       #{checkintime,jdbcType=TIMESTAMP}, #{isdelete,jdbcType=INTEGER}, #{altertime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.tcwong.bean.Driver">
+  <insert id="insertSelective" parameterType="com.tcwong.bean.Driver" useGeneratedKeys="true" keyProperty="driverid">
     insert into driver
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="driverid != null">

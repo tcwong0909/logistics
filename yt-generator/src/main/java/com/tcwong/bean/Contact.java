@@ -1,6 +1,5 @@
 package com.tcwong.bean;
 
-import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 public class Contact implements Serializable {
@@ -9,6 +8,48 @@ public class Contact implements Serializable {
     private Integer fkTruckid;
 
     private Integer fkDriverid;
+
+    private Truck truck;
+
+    private Driver driver;
+
+    private Truckteam truckteam;
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "contactid=" + contactid +
+                ", fkTruckid=" + fkTruckid +
+                ", fkDriverid=" + fkDriverid +
+                ", truck=" + truck +
+                ", driver=" + driver +
+                ", truckteam=" + truckteam +
+                '}';
+    }
+
+    public Truckteam getTruckteam() {
+        return truckteam;
+    }
+
+    public void setTruckteam(Truckteam truckteam) {
+        this.truckteam = truckteam;
+    }
+
+    public Truck getTruck() {
+        return truck;
+    }
+
+    public void setTruck(Truck truck) {
+        this.truck = truck;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -36,17 +77,4 @@ public class Contact implements Serializable {
         this.fkDriverid = fkDriverid;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", contactid=").append(contactid);
-        sb.append(", fkTruckid=").append(fkTruckid);
-        sb.append(", fkDriverid=").append(fkDriverid);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }
