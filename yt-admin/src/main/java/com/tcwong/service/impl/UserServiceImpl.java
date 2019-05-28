@@ -53,14 +53,15 @@ public class UserServiceImpl implements IUserService {
                 .getAttribute("user"))).getUserid();
         user.setUserid(userid);
         String password = userMapper.selectByPrimaryKey(user.getUserid()).getPassword();
-        String oldPassword = new Md5Hash(user.getPassword(), ((User) (SecurityUtils.getSubject().getSession()
+        String oldPassword = new Md5Hash(user.getOldPassword(), ((User) (SecurityUtils.getSubject().getSession()
                 .getAttribute("user"))).getAccount(), 1024).toString();
-        if (password != oldPassword) {
+        if (!oldPassword.equals(password)) {
             return 0;
         }
         Md5Hash md5Hash = new Md5Hash(user.getPassword(), ((User) (SecurityUtils.getSubject().getSession().getAttribute("user"))).getAccount(), 1024);
         user.setPassword(md5Hash.toString());
-        return userMapper.updateByPrimaryKeySelective(user);
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        return i ;
     }
 
 

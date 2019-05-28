@@ -56,9 +56,9 @@ public class UserController {
     public WebResponse editPassword(@RequestBody User user) {
         int num = userService.editPassword(user);
         if (num == 0) {
-            WebResponse.failed("密码不对，请重新输入");
+           return WebResponse.failed("密码不对，请重新输入");
         } else if (num > 0) {
-            WebResponse.success("密码修改成功，请重新登录");
+           return WebResponse.success("密码修改成功，请重新登录");
         }
         return WebResponse.failed("修改失败，请重新输入");
     }
