@@ -114,10 +114,10 @@
     left join truckteam t2 on d1.fk_teamID = t2.teamID
     <where>
       <if test="fkTruckid != null and fkTruckid !='' ">
-        and c1.fk_driverID = #{fkTruckid}
+        and c1.fk_truckID = #{fkTruckid}
       </if>
       <if test="fkDriverid != null and fkDriverid != ''">
-        and c1.fk_truckID = #{fkDriverid}
+        and c1.fk_driverID= #{fkDriverid}
       </if>
       <if test="drivername != null and drivername != ''">
         and d1.name like "%"#{drivername,jdbcType=VARCHAR}"%"
@@ -140,10 +140,10 @@
     left join truckteam t2 on d1.fk_teamID = t2.teamID
     <where>
       <if test="fkTruckid != null and fkTruckid !='' ">
-        and c1.fk_driverID = #{fkTruckid}
+        and c1.fk_truckID= #{fkTruckid}
       </if>
       <if test="fkDriverid != null and fkDriverid != ''">
-        and c1.fk_truckID = #{fkDriverid}
+        and c1.fk_driverID = #{fkDriverid}
       </if>
       <if test="drivername != null and drivername != ''">
         and d1.name like "%"#{drivername,jdbcType=VARCHAR}"%"

@@ -25,7 +25,7 @@ public class ContactController {
     }
 
     @PutMapping("/delete/{ids}")
-    public WebResponse unbindTrucks(String ids) {
+    public WebResponse unbindTrucks(@PathVariable String ids) {
         int num = contactService.unbindTrucks(ids);
         if (num > 0) {
             return WebResponse.success("解除成功");
