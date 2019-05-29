@@ -10,7 +10,6 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -18,7 +17,6 @@ import java.util.Arrays;
 import java.util.Date;
 
 @Aspect
-@Component
 public class LogAdvice {
 
     private Logger logger = Logger.getLogger(LogAdvice.class);
@@ -28,56 +26,6 @@ public class LogAdvice {
 
     }
 
-//    @AfterReturning("controllerAspect()")
-//    public void after(JoinPoint joinPoint) {
-//        try {
-//        //String ip = IP.getIpAddress(request);
-//        String username = ((User) (SecurityUtils.getSubject().getSession().getAttribute("user"))).getUsername();
-//        String targetName = joinPoint.getTarget().getClass().getName();
-//        String methodName = joinPoint.getSignature().getName();
-//        Object[] args = joinPoint.getArgs();
-//        Class targetClass = Class.forName(targetName);
-//        Method[] methods = targetClass.getMethods();
-//        String behavior = "";
-//        String parameters = "";
-//            for (Method method : methods) {
-//                if (method.getName().equals(methodName)) {
-//                    Class<?>[] clazzs = method.getParameterTypes();
-//                    if (clazzs.length == args.length) {
-//                        if (!method.isAnnotationPresent(Log.class)){
-//                            return;
-//                        }
-//                        behavior = method.getAnnotation(Log.class).behavior();
-//                        for (int i = 0; i < args.length; i++) {
-//                            parameters = parameters+args[i]+(i ==args.length-1 ?"":",");
-//                        }
-//                        break;
-//
-//                    }
-//                }
-//            }
-//
-//            logger.info("log 输出+++++");
-//            logger.info("请求方法:"+
-//                    (joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()"));
-//            logger.info("f方法描述："+behavior);
-//            logger.info("请求人"+username);
-//            logger.info("请求参数:"+parameters);
-//            logger.info("写入数据库");
-//            Syslog syslog = new Syslog();
-//            syslog.setProcname(joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
-//            syslog.setBehavior(behavior);
-//            syslog.setCheckintime(new Date());
-//            syslog.setParameters(parameters);
-//            syslog.setIsexception(null);
-//            syslog.setException(null);
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }catch (SecurityException e){
-//            e.printStackTrace();
-//        }
-//    }
-//
 //    @AfterThrowing(pointcut = "controllerAspect()",throwing = "e")
 //    public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
 //        String username = ((User) (SecurityUtils.getSubject().getSession().getAttribute("user"))).getUsername();
