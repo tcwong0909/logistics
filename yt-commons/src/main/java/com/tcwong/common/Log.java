@@ -6,6 +6,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Log {
-    public String behavior() default "";
-    public LogdicType fkTypeid();
+     String behavior() default "";
+     LogdicType fkTypeid();
 }

@@ -1,6 +1,8 @@
 package com.tcwong.controller;
 
 import com.tcwong.bean.Truckteam;
+import com.tcwong.common.Log;
+import com.tcwong.common.LogdicType;
 import com.tcwong.common.WebPageResponse;
 import com.tcwong.common.WebResponse;
 import com.tcwong.service.ITruckTeamService;
@@ -9,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 车队
+ */
 @RestController
 @RequestMapping("/truckTeam/")
 public class TruckTeamController {
@@ -16,6 +21,7 @@ public class TruckTeamController {
     @Resource
     private ITruckTeamService truckTeamService;
 
+    @Log(behavior = "车队添加",fkTypeid = LogdicType.ADD)
     @PostMapping("/add")
     public WebResponse addTruckTeam(@RequestBody Truckteam truckteam, HttpServletRequest request){
 
@@ -26,6 +32,7 @@ public class TruckTeamController {
         return WebResponse.failed("添加失败");
     }
 
+    @Log(behavior = "车队删除",fkTypeid = LogdicType.DELETE)
     @DeleteMapping("/delete/{ids}")
     public WebResponse deleteByIds(@PathVariable String ids) {
         int num = truckTeamService.deleteByIds(ids);
@@ -35,6 +42,7 @@ public class TruckTeamController {
         return WebResponse.failed("删除失败");
     }
 
+    @Log(behavior = "车队修改",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/put")
     public WebResponse editTruckTeam(@RequestBody Truckteam truckteam) {
         int num = truckTeamService.editTruckTeam(truckteam);

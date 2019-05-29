@@ -1,6 +1,8 @@
 package com.tcwong.controller;
 
 import com.tcwong.bean.Scheduling;
+import com.tcwong.common.Log;
+import com.tcwong.common.LogdicType;
 import com.tcwong.common.WebPageResponse;
 import com.tcwong.common.WebResponse;
 import com.tcwong.service.IScheduleService;
@@ -10,6 +12,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * 调度
+ */
 @RestController
 @RequestMapping("/schedule/")
 public class ScheduleController {
@@ -17,6 +22,7 @@ public class ScheduleController {
     @Resource
     private IScheduleService scheduleService;
 
+    @Log(behavior = "承运单调度",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/dispatch")
     public WebResponse dispatchById(@RequestBody Scheduling scheduling, HttpServletRequest request) {
 
@@ -36,6 +42,7 @@ public class ScheduleController {
         return WebResponse.failed("查询失败");
     }
 
+    @Log(behavior = "调度单删除",fkTypeid = LogdicType.DELETE)
     @PostMapping("/delete")
     public WebResponse deleteMore(@RequestBody List<Scheduling> scheduleList) {
         int num = scheduleService.deleteMore(scheduleList);

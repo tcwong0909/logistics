@@ -1,6 +1,8 @@
 package com.tcwong.controller;
 
 import com.tcwong.bean.Truck;
+import com.tcwong.common.Log;
+import com.tcwong.common.LogdicType;
 import com.tcwong.common.WebPageResponse;
 import com.tcwong.common.WebResponse;
 import com.tcwong.service.ITruckService;
@@ -12,6 +14,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 
+/**
+ * 车辆
+ */
 @RestController
 @RequestMapping("/truck/")
 public class TruckController {
@@ -19,6 +24,7 @@ public class TruckController {
     @Resource
     private ITruckService truckService;
 
+    @Log(behavior = "车辆添加",fkTypeid = LogdicType.GET)
     @PostMapping("/add")
     public WebResponse addTruck(@RequestBody Truck truck, HttpServletRequest request) {
         int num = truckService.addTruck(truck);
@@ -28,6 +34,7 @@ public class TruckController {
         return WebResponse.failed("添加失败");
     }
 
+    @Log(behavior = "车辆修改",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/put")
     public WebResponse editTruck(@RequestBody Truck truck, HttpServletRequest request) {
         int num = truckService.editTruck(truck);
@@ -37,6 +44,7 @@ public class TruckController {
         return WebResponse.failed("编辑失败");
     }
 
+    @Log(behavior = "车辆删除",fkTypeid = LogdicType.DELETE)
     @DeleteMapping("/delete/{ids}")
     public WebResponse deleteByIds(@PathVariable String ids, HttpServletRequest request){
         int num = truckService.deleteByIds(ids);
@@ -81,6 +89,7 @@ public class TruckController {
         }
         return WebResponse.failed("为查询到结果");
     }
+
 
     @RequestMapping("/getTrucks")
     public WebResponse selectTruck(HttpServletRequest request){

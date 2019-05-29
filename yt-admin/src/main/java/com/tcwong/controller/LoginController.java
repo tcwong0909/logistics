@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 登录
+ */
 @RestController
 public class LoginController {
 
@@ -37,6 +40,7 @@ public class LoginController {
         return WebResponse.failed("登录失败");
     }
 
+    @Log(behavior = "注销登录",fkTypeid = LogdicType.LOGOUT)
     @PostMapping("/logout")
     public WebResponse logout(HttpServletRequest request){
         Session session = SecurityUtils.getSubject().getSession();

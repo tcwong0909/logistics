@@ -5,7 +5,8 @@ public enum LogdicType {
     ADD(2, "添加数据"),
     DELETE(3, "删除数据"),
     UPDATE(4, "修改数据"),
-    GET(5,"查询数据")
+    GET(5,"查询数据"),
+    LOGOUT(6,"注销登录")
     ;
 
 

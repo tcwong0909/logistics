@@ -1,6 +1,8 @@
 package com.tcwong.controller;
 
 import com.tcwong.bean.Contact;
+import com.tcwong.common.Log;
+import com.tcwong.common.LogdicType;
 import com.tcwong.common.WebPageResponse;
 import com.tcwong.common.WebResponse;
 import com.tcwong.service.IContactService;
@@ -9,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 车辆绑定
+ */
 @RestController
 @RequestMapping("/contact/")
 public class ContactController {
@@ -16,6 +21,7 @@ public class ContactController {
     @Resource
     private IContactService contactService;
 
+    @Log(behavior = "车辆绑定",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/put")
     public WebResponse bindTruck(@RequestBody Contact contact, HttpServletRequest request) {
         int num = contactService.bindTruck(contact);
@@ -25,6 +31,7 @@ public class ContactController {
         return WebResponse.failed("绑定失败");
     }
 
+    @Log(behavior = "解除车辆绑定",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/delete/{ids}")
     public WebResponse unbindTrucks(@PathVariable String ids,HttpServletRequest request) {
         int num = contactService.unbindTrucks(ids);

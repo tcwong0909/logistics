@@ -2,6 +2,8 @@ package com.tcwong.controller;
 
 import com.tcwong.bean.Carriers;
 import com.tcwong.bean.Goods;
+import com.tcwong.common.Log;
+import com.tcwong.common.LogdicType;
 import com.tcwong.common.WebPageResponse;
 import com.tcwong.common.WebResponse;
 import com.tcwong.service.ICarriersService;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 承运单
+ */
 @RestController
 @RequestMapping("/carriers/")
 public class CarriersController  {
@@ -20,6 +25,7 @@ public class CarriersController  {
     @Resource
     private IGoodsService goodsService;
 
+    @Log(behavior = "添加承运单货物",fkTypeid = LogdicType.ADD)
     @PostMapping("/add")
     public WebResponse addCarriersGoods(@RequestBody Carriers carriers, HttpServletRequest request) {
 
@@ -30,6 +36,7 @@ public class CarriersController  {
         return WebResponse.failed("添加失败");
     }
 
+    @Log(behavior = "删除承运单",fkTypeid = LogdicType.DELETE)
     @DeleteMapping("/delete/{ids}")
     public WebResponse deleteCarriersGoods(@PathVariable String ids, HttpServletRequest request) {
         int num1 = carriersService.deleteCarrier(ids);
@@ -40,6 +47,7 @@ public class CarriersController  {
         return WebResponse.failed("删除失败");
     }
 
+    @Log(behavior = "修改承运单",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/put")
     public WebResponse editCarriersGoods(@RequestBody Carriers carriers, @RequestBody Goods goods,
                                          HttpServletRequest request) {
@@ -61,6 +69,7 @@ public class CarriersController  {
         return WebResponse.failed("查询失败");
     }
 
+    @Log(behavior = "承运单接收",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/receive/{id}")
     public WebResponse reveiveById(@PathVariable Integer id , HttpServletRequest request){
         int num = carriersService.reveiveById(id);
