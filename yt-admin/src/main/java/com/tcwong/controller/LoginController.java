@@ -1,5 +1,6 @@
 package com.tcwong.controller;
 
+import com.tcwong.bean.LoginBean;
 import com.tcwong.bean.User;
 import com.tcwong.common.Log;
 import com.tcwong.common.LogdicType;
@@ -28,11 +29,12 @@ public class LoginController {
 
     @Log(behavior = "登录",fkTypeid = LogdicType.LOGIN)
     @PostMapping("/login")
-    public WebResponse login(@RequestBody User user, HttpServletRequest request){
+    public WebResponse login(@RequestBody LoginBean user, HttpServletRequest request){
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(new UsernamePasswordToken(user.getAccount(), user.getPassword()));
             User user1 = loginService.login(user.getAccount()).get(0);
+            user1.setPassword(null);
             return WebResponse.success(user1);
         } catch (AuthenticationException e) {
             e.printStackTrace();
