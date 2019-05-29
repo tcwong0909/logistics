@@ -15,11 +15,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>5.1.8</version>
-        </dependency>
         <!--Swagger-UI API文档生产工具-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -49,8 +44,6 @@
         </dependency>
 
     </dependencies>
-
-
     <build>
 
         <plugins>

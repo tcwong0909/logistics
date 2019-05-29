@@ -1,6 +1,8 @@
 package com.tcwong.controller;
 
 import com.tcwong.bean.User;
+import com.tcwong.common.Log;
+import com.tcwong.common.LogdicType;
 import com.tcwong.common.WebResponse;
 import com.tcwong.service.ILoginService;
 import org.apache.shiro.SecurityUtils;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class LoginController {
@@ -20,8 +23,9 @@ public class LoginController {
     @Resource
     private ILoginService loginService;
 
+    @Log(behavior = "登录",fkTypeid = LogdicType.LOGIN)
     @PostMapping("/login")
-    public WebResponse login(@RequestBody User user){
+    public WebResponse login(@RequestBody User user, HttpServletRequest request){
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(new UsernamePasswordToken(user.getAccount(), user.getPassword()));

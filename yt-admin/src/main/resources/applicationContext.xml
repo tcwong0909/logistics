@@ -8,7 +8,11 @@
 	<!-- 关联数据属性文件 -->
 	<context:property-placeholder location="classpath:db.properties" />
 	<!-- 开启扫描 -->
-	<context:component-scan base-package="com.tcwong.service.*" />
+	<context:component-scan base-package="com.tcwong.*" />
+	<!--<aop:aspectj-autoproxy/>-->
+	<!--<bean class="com.tcwong.utils.LogAdvice"/>-->
+	<!--<aop:aspectj-autoproxy expose-proxy="true" proxy-target-class="true"/>-->
+
 
 	<!-- 配置数据源 -->
 	<!--<bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource">
@@ -61,6 +65,7 @@
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
+
 		<aop:pointcut id="pc1" expression="execution(* com.tcwong.service.*.*(..))"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pc1"/>
 	</aop:config>

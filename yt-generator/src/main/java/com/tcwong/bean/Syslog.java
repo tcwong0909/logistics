@@ -1,6 +1,5 @@
 package com.tcwong.bean;
 
-import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,6 +23,22 @@ public class Syslog implements Serializable {
     private String parameters;
 
     private String exception;
+
+    public Syslog(Integer fkTypeid, Integer fkUserid, String procname, String ip, Date checkintime,
+                  Integer isexception, String behavior, String parameters, String exception) {
+        this.fkTypeid = fkTypeid;
+        this.fkUserid = fkUserid;
+        this.procname = procname;
+        this.ip = ip;
+        this.checkintime = checkintime;
+        this.isexception = isexception;
+        this.behavior = behavior;
+        this.parameters = parameters;
+        this.exception = exception;
+    }
+
+    public Syslog() {
+    }
 
     private static final long serialVersionUID = 1L;
 

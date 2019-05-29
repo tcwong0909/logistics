@@ -15,6 +15,7 @@ public class CostController {
     @Resource
     private IScheduleService scheduleService;
 
+
     @PostMapping("/getAllByPage")
     public WebResponse getAllByPage(Integer page,Integer size,Integer schedulingid,Integer fkCarriersid){
         WebPageResponse pageResponse = scheduleService.getSchedules(page, size, schedulingid, fkCarriersid, null, null);
