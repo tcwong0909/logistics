@@ -19,7 +19,7 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/add")
-    public WebResponse addUser(@RequestBody User user) {
+    public WebResponse addUser(@RequestBody User user, HttpServletRequest request) {
         int num = userService.addUser(user);
         if (num > 0) {
             return WebResponse.success("添加成功");
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{ids}")
-    public WebResponse deleteByIds(@PathVariable String ids) {
+    public WebResponse deleteByIds(@PathVariable String ids, HttpServletRequest request) {
         int num = userService.deleteByIds(ids);
         if (num > 0) {
             return WebResponse.success("删除成功");
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PutMapping("/edit")
-    public WebResponse editUser(@RequestBody User user) {
+    public WebResponse editUser(@RequestBody User user, HttpServletRequest request) {
         int num = userService.editUser(user);
         if (num > 0) {
             return WebResponse.success("修改成功");
@@ -47,8 +47,8 @@ public class UserController {
 
     @Log(behavior = "用户查询",fkTypeid = LogdicType.GET)
     @PostMapping("/getAllByPage")
-    public WebResponse getAllByPage(Integer page, Integer size, String username,
-                                    String account, Integer sex, Integer fkRoleid , HttpServletRequest request) {
+    public WebResponse getAllByPage(Integer page, Integer size, String username,String account,
+                                    Integer sex, Integer fkRoleid , HttpServletRequest request) {
         WebPageResponse pageResponse = userService.getAllByPage(page, size, username, account, sex, fkRoleid);
         if (pageResponse != null) {
             return WebResponse.success(pageResponse, "查询成功");
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @PutMapping("/password")
-    public WebResponse editPassword(@RequestBody User user) {
+    public WebResponse editPassword(@RequestBody User user, HttpServletRequest request) {
         int num = userService.editPassword(user);
         if (num == 0) {
            return WebResponse.failed("密码不对，请重新输入");

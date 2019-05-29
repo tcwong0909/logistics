@@ -6,6 +6,7 @@ import com.tcwong.service.IRoleService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -16,7 +17,7 @@ public class RoleController {
     private IRoleService roleService;
 
     @PostMapping("/add")
-    public WebResponse addRole(@RequestBody Role role) {
+    public WebResponse addRole(@RequestBody Role role, HttpServletRequest request) {
         int num = roleService.addRole(role);
         if (num > 0) {
             return WebResponse.success("添加成功");
@@ -25,7 +26,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public WebResponse deleteById(@PathVariable Integer id) {
+    public WebResponse deleteById(@PathVariable Integer id, HttpServletRequest request) {
         int num = roleService.deleteById(id);
         if (num > 0) {
             return WebResponse.success("删除成功");
@@ -34,7 +35,7 @@ public class RoleController {
     }
 
     @PutMapping("/edit")
-    public WebResponse editRole(@RequestBody Role role) {
+    public WebResponse editRole(@RequestBody Role role, HttpServletRequest request) {
         int num = roleService.editRole(role);
         if (num > 0) {
             return WebResponse.success("修改成功");
@@ -43,7 +44,7 @@ public class RoleController {
     }
 
     @GetMapping("/getAll")
-    public WebResponse getAllRoles(){
+    public WebResponse getAllRoles(HttpServletRequest request){
         List<Role> allRoles = roleService.getAllRoles();
         if (allRoles != null) {
             return WebResponse.success(allRoles);

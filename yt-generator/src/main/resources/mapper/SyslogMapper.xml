@@ -15,6 +15,16 @@
     <result column="parameters" jdbcType="LONGVARCHAR" property="parameters" />
     <result column="exception" jdbcType="LONGVARCHAR" property="exception" />
   </resultMap>
+  <resultMap id="BaseResultMap2" type="com.tcwong.bean.Syslog" extends="ResultMapWithBLOBs">
+    <association property="logdic" javaType="com.tcwong.bean.Logdic">
+      <id column="typeID" jdbcType="INTEGER" property="typeid" />
+      <result column="typeName" jdbcType="VARCHAR" property="typename" />
+    </association>
+    <association property="user" javaType="com.tcwong.bean.User">
+      <id column="userID" jdbcType="INTEGER" property="userid" />
+      <result column="userName" jdbcType="VARCHAR" property="username" />
+    </association>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -79,6 +89,47 @@
   <sql id="Blob_Column_List">
     behavior, parameters, exception
   </sql>
+
+  <select id="getTotal" resultType="Long">
+    select count(*) from syslog s1 left join logdic l1 on s1.fk_typeID =l1.typeID
+                                   left join user u1 on s1.fk_userID=u1.userID
+    <where>
+      <if test="behavior != null and behavior !=''">
+        and s1.behavior like "%"#{behavior }"%"
+      </if>
+      <if test="typename != null and typename!='' ">
+        and l1.typeName like "%"#{typename }"%"
+      </if>
+      <if test="username != null and username != ''">
+        and u1.userName like "%"#{username}"%"
+      </if>
+      <if test="isexception != null and isexception != ''">
+        and s1.isException = #{isexception}
+      </if>
+    </where>
+  </select>
+
+  <select id="getAll" resultMap="BaseResultMap2">
+    select * from syslog s1 left join logdic l1 on s1.fk_typeID =l1.typeID
+    left join user u1 on s1.fk_userID=u1.userID
+    <where>
+      <if test="behavior != null and behavior !=''">
+        and s1.behavior like "%"#{behavior }"%"
+      </if>
+      <if test="typename != null and typename!='' ">
+        and l1.typeName like "%"#{typename }"%"
+      </if>
+      <if test="username != null and username != ''">
+        and u1.userName like "%"#{username}"%"
+      </if>
+      <if test="isexception != null and isexception != ''">
+        and s1.isException = #{isexception}
+      </if>
+    </where>
+    <if test="page != null and size != null">
+      limit #{page},#{size}
+    </if>
+  </select>
   <select id="selectByExampleWithBLOBs" parameterType="com.tcwong.bean.SyslogExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">

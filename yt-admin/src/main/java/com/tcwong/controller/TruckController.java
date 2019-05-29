@@ -7,6 +7,7 @@ import com.tcwong.service.ITruckService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
@@ -19,7 +20,7 @@ public class TruckController {
     private ITruckService truckService;
 
     @PostMapping("/add")
-    public WebResponse addTruck(@RequestBody Truck truck) {
+    public WebResponse addTruck(@RequestBody Truck truck, HttpServletRequest request) {
         int num = truckService.addTruck(truck);
         if (num > 0) {
             return WebResponse.success("添加成功");
@@ -28,7 +29,7 @@ public class TruckController {
     }
 
     @PutMapping("/put")
-    public WebResponse editTruck(@RequestBody Truck truck) {
+    public WebResponse editTruck(@RequestBody Truck truck, HttpServletRequest request) {
         int num = truckService.editTruck(truck);
         if (num >0) {
             return WebResponse.success("编辑成功");
@@ -37,7 +38,7 @@ public class TruckController {
     }
 
     @DeleteMapping("/delete/{ids}")
-    public WebResponse deleteByIds(@PathVariable String ids){
+    public WebResponse deleteByIds(@PathVariable String ids, HttpServletRequest request){
         int num = truckService.deleteByIds(ids);
         if (num >0){
             return WebResponse.success("删除成功");
@@ -46,7 +47,8 @@ public class TruckController {
     }
 
     @PostMapping("/getAllByPage")
-    public WebResponse getAllTrucksByPage(Integer page,Integer size,String number,String type,Integer fkTeamid){
+    public WebResponse getAllTrucksByPage(Integer page,Integer size,String number,String type,
+                                          Integer fkTeamid, HttpServletRequest request){
         WebPageResponse pageResponse = truckService.search(page, size, number, type, fkTeamid);
         if (pageResponse != null){
             return WebResponse.success(pageResponse, "查询成功");
@@ -56,7 +58,8 @@ public class TruckController {
 
 
     @GetMapping("/search")
-    public WebResponse doSearch(Integer page,Integer size,String number,String type,String fkTeamid){
+    public WebResponse doSearch(Integer page,Integer size,String number,String type,String fkTeamid,
+                                HttpServletRequest request){
         String number1 = null;
         String type1 = null;
         Integer fkTeamid1 = null;
@@ -80,7 +83,7 @@ public class TruckController {
     }
 
     @RequestMapping("/getTrucks")
-    public WebResponse selectTruck(){
+    public WebResponse selectTruck(HttpServletRequest request){
         List<Truck> trucks = truckService.selectTruck();
         if (trucks != null){
             return WebResponse.success(trucks);

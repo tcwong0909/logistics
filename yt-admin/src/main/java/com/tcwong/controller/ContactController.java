@@ -7,6 +7,7 @@ import com.tcwong.service.IContactService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/contact/")
@@ -16,7 +17,7 @@ public class ContactController {
     private IContactService contactService;
 
     @PutMapping("/put")
-    public WebResponse bindTruck(@RequestBody Contact contact) {
+    public WebResponse bindTruck(@RequestBody Contact contact, HttpServletRequest request) {
         int num = contactService.bindTruck(contact);
         if (num > 0) {
             return WebResponse.success("绑定成功");
@@ -25,7 +26,7 @@ public class ContactController {
     }
 
     @PutMapping("/delete/{ids}")
-    public WebResponse unbindTrucks(@PathVariable String ids) {
+    public WebResponse unbindTrucks(@PathVariable String ids,HttpServletRequest request) {
         int num = contactService.unbindTrucks(ids);
         if (num > 0) {
             return WebResponse.success("解除成功");
@@ -35,7 +36,7 @@ public class ContactController {
 
     @GetMapping("/getAll")
     public WebResponse getContact(Integer page,Integer size,Integer fkTruckid,Integer fkDriverid,String drivername,
-                                  String teamname,Integer bindId) {
+                                  String teamname,Integer bindId, HttpServletRequest request) {
         WebPageResponse pageResponse = contactService.getAll( page,size,fkTruckid,fkDriverid,drivername,
                 teamname, bindId);
         if (pageResponse != null) {

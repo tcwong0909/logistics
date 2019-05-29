@@ -7,6 +7,7 @@ import com.tcwong.service.ITruckTeamService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/truckTeam/")
@@ -16,7 +17,7 @@ public class TruckTeamController {
     private ITruckTeamService truckTeamService;
 
     @PostMapping("/add")
-    public WebResponse addTruckTeam(@RequestBody Truckteam truckteam){
+    public WebResponse addTruckTeam(@RequestBody Truckteam truckteam, HttpServletRequest request){
 
         int num = truckTeamService.addTruckTeam(truckteam);
         if (num > 0) {

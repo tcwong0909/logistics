@@ -38,7 +38,7 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public WebResponse logout(){
+    public WebResponse logout(HttpServletRequest request){
         Session session = SecurityUtils.getSubject().getSession();
         session.stop();
         return WebResponse.success("注销成功");

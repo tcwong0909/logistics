@@ -24,6 +24,44 @@ public class Syslog implements Serializable {
 
     private String exception;
 
+    private Logdic logdic;
+
+    private User user;
+
+    @Override
+    public String toString() {
+        return "Syslog{" +
+                "logid=" + logid +
+                ", fkTypeid=" + fkTypeid +
+                ", fkUserid=" + fkUserid +
+                ", procname='" + procname + '\'' +
+                ", ip='" + ip + '\'' +
+                ", checkintime=" + checkintime +
+                ", isexception=" + isexception +
+                ", behavior='" + behavior + '\'' +
+                ", parameters='" + parameters + '\'' +
+                ", exception='" + exception + '\'' +
+                ", logdic=" + logdic +
+                ", user=" + user +
+                '}';
+    }
+
+    public Logdic getLogdic() {
+        return logdic;
+    }
+
+    public void setLogdic(Logdic logdic) {
+        this.logdic = logdic;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Syslog(Integer fkTypeid, Integer fkUserid, String procname, String ip, Date checkintime,
                   Integer isexception, String behavior, String parameters, String exception) {
         this.fkTypeid = fkTypeid;
@@ -122,24 +160,4 @@ public class Syslog implements Serializable {
         this.exception = exception;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", logid=").append(logid);
-        sb.append(", fkTypeid=").append(fkTypeid);
-        sb.append(", fkUserid=").append(fkUserid);
-        sb.append(", procname=").append(procname);
-        sb.append(", ip=").append(ip);
-        sb.append(", checkintime=").append(checkintime);
-        sb.append(", isexception=").append(isexception);
-        sb.append(", behavior=").append(behavior);
-        sb.append(", parameters=").append(parameters);
-        sb.append(", exception=").append(exception);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

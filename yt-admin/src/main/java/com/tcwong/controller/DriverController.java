@@ -7,6 +7,8 @@ import com.tcwong.service.IDriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/driver/")
 public class DriverController {
@@ -15,7 +17,7 @@ public class DriverController {
     private IDriverService driverService;
 
     @PostMapping("/add")
-    public WebResponse addDriver(@RequestBody Driver driver) {
+    public WebResponse addDriver(@RequestBody Driver driver, HttpServletRequest request) {
         int num = driverService.addDriver(driver);
         if (num > 0) {
             return WebResponse.success("添加成功");
@@ -24,7 +26,7 @@ public class DriverController {
     }
 
     @DeleteMapping("/delete/{ids}")
-    public WebResponse deleteByIds(@PathVariable String ids) {
+    public WebResponse deleteByIds(@PathVariable String ids, HttpServletRequest request) {
         int num = driverService.deleteByIds(ids);
         if (num > 0) {
             return WebResponse.success("删除成功");
@@ -33,7 +35,7 @@ public class DriverController {
     }
 
     @PutMapping("/put")
-    public WebResponse editDriver(@RequestBody Driver driver) {
+    public WebResponse editDriver(@RequestBody Driver driver, HttpServletRequest request) {
         int num = driverService.editDriver(driver);
         if (num > 0) {
             return WebResponse.success("修改成功");
@@ -42,7 +44,8 @@ public class DriverController {
     }
 
     @PostMapping("/getAllByPage")
-    public WebResponse getAllDriverByPage(Integer page, Integer size,String name,Integer fkTeamid,Integer state) {
+    public WebResponse getAllDriverByPage(Integer page, Integer size,String name,Integer fkTeamid,
+                                          Integer state, HttpServletRequest request) {
         WebPageResponse pageResponse = driverService.getAllDriverByPage(page, size,name,fkTeamid,state);
         if (pageResponse != null) {
             return WebResponse.success(pageResponse, "查询成功");

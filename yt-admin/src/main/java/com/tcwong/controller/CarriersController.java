@@ -9,6 +9,7 @@ import com.tcwong.service.IGoodsService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/carriers/")
@@ -20,7 +21,7 @@ public class CarriersController  {
     private IGoodsService goodsService;
 
     @PostMapping("/add")
-    public WebResponse addCarriersGoods( @RequestBody Carriers carriers) {
+    public WebResponse addCarriersGoods(@RequestBody Carriers carriers, HttpServletRequest request) {
 
         int num = carriersService.addCarrier(carriers);
         if (num > 0) {
@@ -30,7 +31,7 @@ public class CarriersController  {
     }
 
     @DeleteMapping("/delete/{ids}")
-    public WebResponse deleteCarriersGoods(@PathVariable String ids) {
+    public WebResponse deleteCarriersGoods(@PathVariable String ids, HttpServletRequest request) {
         int num1 = carriersService.deleteCarrier(ids);
         int num2 = goodsService.deleteGoods(ids);
         if (num1 > 0 && num2 > 0) {
@@ -40,7 +41,8 @@ public class CarriersController  {
     }
 
     @PutMapping("/put")
-    public WebResponse editCarriersGoods(@RequestBody Carriers carriers, @RequestBody Goods goods) {
+    public WebResponse editCarriersGoods(@RequestBody Carriers carriers, @RequestBody Goods goods,
+                                         HttpServletRequest request) {
         int num1 = carriersService.editCarrier(carriers);
         int num2 = goodsService.editGoods(goods);
         if (num1 > 0 && num2 > 0) {
@@ -50,7 +52,8 @@ public class CarriersController  {
     }
 
     @PostMapping("/getAll")
-    public WebResponse getAllByPage(Integer page,Integer size,String sendcompany,String receivecompany,Integer finishedstate){
+    public WebResponse getAllByPage(Integer page,Integer size,String sendcompany,String receivecompany,
+                                    Integer finishedstate, HttpServletRequest request){
         WebPageResponse pageResponse = carriersService.getAllByPage(page, size, sendcompany, receivecompany, finishedstate);
         if (pageResponse != null) {
             return WebResponse.success(pageResponse, "查询成功");
@@ -59,7 +62,7 @@ public class CarriersController  {
     }
 
     @PutMapping("/receive/{id}")
-    public WebResponse reveiveById(@PathVariable Integer id ){
+    public WebResponse reveiveById(@PathVariable Integer id , HttpServletRequest request){
         int num = carriersService.reveiveById(id);
         if (num > 0) {
             return WebResponse.success("接收成功");

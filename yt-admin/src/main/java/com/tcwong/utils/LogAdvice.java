@@ -3,7 +3,7 @@ package com.tcwong.utils;
 import com.tcwong.bean.Syslog;
 import com.tcwong.bean.User;
 import com.tcwong.common.Log;
-import org.apache.log4j.Logger;
+import com.tcwong.service.ISyslogService;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -19,7 +20,8 @@ import java.util.Date;
 @Aspect
 public class LogAdvice {
 
-    private Logger logger = Logger.getLogger(LogAdvice.class);
+    @Resource
+    private ISyslogService syslogService;
 
     @Pointcut("execution(* com.tcwong.controller.*.*(..))")
     public void controllerAspect() {
@@ -84,7 +86,7 @@ public class LogAdvice {
         String procname = "";
         String ip = "";
         Date checkintime = new Date();
-        Integer isexception = 0;
+        Integer isexception = 1;
         String behavior = "";
         String parameters = "";
         String exception = "";
@@ -96,8 +98,10 @@ public class LogAdvice {
         procname = joinPoint.getSignature().getName();
         //获取到参数
         Object[] args = joinPoint.getArgs();
-        HttpServletRequest request =  ((HttpServletRequest)(args[args.length - 1]));
-        ip = IP.getIpAddress(request);
+        if (args.length>0){
+            HttpServletRequest request =  ((HttpServletRequest)(args[args.length - 1]));
+            ip = IP.getIpAddress(request);
+        }
         //获取字节码对象
         Class<?> targetClass = Class.forName(targetName);
         Method[] methods = targetClass.getMethods();
@@ -105,8 +109,13 @@ public class LogAdvice {
             if (method.getName().equals(procname)) {
                 Class<?>[] parameterTypes = method.getParameterTypes();
                 if (parameterTypes.length == args.length) {
-                    behavior = method.getAnnotation(Log.class).behavior();
-                    fkTypeid = method.getAnnotation(Log.class).fkTypeid().getNum();
+                    try {
+                        behavior = method.getAnnotation(Log.class).behavior();
+                        fkTypeid = method.getAnnotation(Log.class).fkTypeid().getNum();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return;
+                    }
                     break;
                 }
             }
@@ -116,6 +125,7 @@ public class LogAdvice {
         }
         parameters = Arrays.toString(args);
         Syslog syslog = new Syslog(fkTypeid, fkUserid, procname, ip, checkintime, isexception, behavior, parameters, exception);
+        syslogService.addSyslog(syslog);
         System.out.println(syslog);
         System.out.println("AfterReturning++++++++");
     }

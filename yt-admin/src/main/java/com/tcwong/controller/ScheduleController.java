@@ -7,6 +7,7 @@ import com.tcwong.service.IScheduleService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class ScheduleController {
     private IScheduleService scheduleService;
 
     @PutMapping("/dispatch")
-    public WebResponse dispatchById(@RequestBody Scheduling scheduling) {
+    public WebResponse dispatchById(@RequestBody Scheduling scheduling, HttpServletRequest request) {
 
         int num = scheduleService.dispatchById(scheduling);
         if (num > 0) {

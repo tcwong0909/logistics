@@ -1,11 +1,11 @@
 package com.tcwong.common;
 
 public enum LogdicType {
-    LOGIN(0, "登录"),
-    ADD(1, "添加数据"),
-    DELETE(2, "删除数据"),
-    UPDATE(3, "修改数据"),
-    GET(4,"查询数据")
+    LOGIN(1, "登录"),
+    ADD(2, "添加数据"),
+    DELETE(3, "删除数据"),
+    UPDATE(4, "修改数据"),
+    GET(5,"查询数据")
     ;
 
 
