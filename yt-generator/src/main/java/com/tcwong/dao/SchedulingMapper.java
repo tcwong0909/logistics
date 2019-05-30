@@ -31,7 +31,7 @@ public interface SchedulingMapper {
 
     Long getTotal(@Param("schedulingid") Integer schedulingid, @Param("fkCarriersid") Integer fkCarriersid, @Param("sendcompany") String sendcompany, @Param("receivecompany") String receivecompany);
 
-    List<?> getAllByPage(@Param("page") Integer page, @Param("size") Integer size, @Param("schedulingid") Integer schedulingid, @Param("fkCarriersid") Integer fkCarriersid, @Param("sendcompany") String sendcompany, @Param("receivecompany") String receivecompany);
+    List<Scheduling> getAllByPage(@Param("page") Integer page, @Param("size") Integer size, @Param("schedulingid") Integer schedulingid, @Param("fkCarriersid") Integer fkCarriersid, @Param("sendcompany") String sendcompany, @Param("receivecompany") String receivecompany);
 
     int deleteByIds(@Param("ids") String[] schedulingIds);
 }

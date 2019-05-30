@@ -55,10 +55,7 @@ public class LogAdvice {
         procname = joinPoint.getSignature().getName();
         //获取到参数
         Object[] args = joinPoint.getArgs();
-        if (args.length>0){
-            HttpServletRequest request =  ((HttpServletRequest)(args[args.length - 1]));
-            ip = IP.getIpAddress(request);
-        }
+
         //获取字节码对象
         Class<?> targetClass = Class.forName(targetName);
         Method[] methods = targetClass.getMethods();
@@ -77,6 +74,10 @@ public class LogAdvice {
                     break;
                 }
             }
+        }
+        if (args.length>0){
+            HttpServletRequest request =  ((HttpServletRequest)(args[args.length - 1]));
+            ip = IP.getIpAddress(request);
         }
         if (args.length > 1) {
             args = Arrays.copyOfRange(args, 0, args.length - 1);
@@ -105,10 +106,7 @@ public class LogAdvice {
         procname = joinPoint.getSignature().getName();
         //获取到参数
         Object[] args = joinPoint.getArgs();
-        if (args.length>0){
-            HttpServletRequest request =  ((HttpServletRequest)(args[args.length - 1]));
-            ip = IP.getIpAddress(request);
-        }
+
         //获取字节码对象
         Class<?> targetClass = Class.forName(targetName);
         Method[] methods = targetClass.getMethods();
@@ -127,6 +125,10 @@ public class LogAdvice {
                     break;
                 }
             }
+        }
+        if (args.length>0){
+            HttpServletRequest request =  ((HttpServletRequest)(args[args.length - 1]));
+            ip = IP.getIpAddress(request);
         }
         exception = e.getMessage();
         if (args.length > 1) {

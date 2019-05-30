@@ -34,7 +34,7 @@ public class TruckTeamController {
 
     @Log(behavior = "车队删除",fkTypeid = LogdicType.DELETE)
     @DeleteMapping("/delete/{ids}")
-    public WebResponse deleteByIds(@PathVariable String ids) {
+    public WebResponse deleteByIds(@PathVariable String ids ,HttpServletRequest request) {
         int num = truckTeamService.deleteByIds(ids);
         if (num > 0) {
             return WebResponse.success("删除成功");
@@ -44,10 +44,10 @@ public class TruckTeamController {
 
     @Log(behavior = "车队修改",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/put")
-    public WebResponse editTruckTeam(@RequestBody Truckteam truckteam) {
+    public WebResponse editTruckTeam(@RequestBody Truckteam truckteam,HttpServletRequest request) {
         int num = truckTeamService.editTruckTeam(truckteam);
         if (num > 0) {
-            return WebResponse.success("修改成功");
+            return WebResponse.success(num,"修改成功");
         }
         return WebResponse.failed("修改失败");
     }

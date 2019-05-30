@@ -23,8 +23,7 @@ public class TruckTeamServiceImpl implements ITruckTeamService {
     @Override
     public int deleteByIds(String ids) {
         String[] split = ids.split(",");
-        truckteamMapper.deleteByIds(split);
-        return split.length;
+        return truckteamMapper.deleteByIds(split);
     }
 
     @Override
