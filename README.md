@@ -36,7 +36,7 @@
 
 1、后端采用Maven多模块管理，Spring、SpringMVC、Mybatis、Mybatis逆向、Shiro安全框架、Druid数据库连接池。
 
-2、前端采用VUE、VUE-axios、VUE-router、ElementUI、js-md5等技术框架开。
+2、前端采用VUE、VUE-axios、VUE-router、ElementUI、js-md5等技术框架。
 
 前端代码地址[https://github.com/tcwong0909/logisticsWeb](https://github.com/tcwong0909/logisticsWeb)
 
