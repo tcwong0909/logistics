@@ -9,7 +9,6 @@ import com.tcwong.service.ITruckTeamService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 车队
@@ -23,7 +22,7 @@ public class TruckTeamController {
 
     @Log(behavior = "车队添加",fkTypeid = LogdicType.ADD)
     @PostMapping("/add")
-    public WebResponse addTruckTeam(@RequestBody Truckteam truckteam, HttpServletRequest request){
+    public WebResponse addTruckTeam(@RequestBody Truckteam truckteam){
 
         int num = truckTeamService.addTruckTeam(truckteam);
         if (num > 0) {
@@ -34,7 +33,7 @@ public class TruckTeamController {
 
     @Log(behavior = "车队删除",fkTypeid = LogdicType.DELETE)
     @DeleteMapping("/delete/{ids}")
-    public WebResponse deleteByIds(@PathVariable String ids ,HttpServletRequest request) {
+    public WebResponse deleteByIds(@PathVariable String ids) {
         int num = truckTeamService.deleteByIds(ids);
         if (num > 0) {
             return WebResponse.success("删除成功");
@@ -44,7 +43,7 @@ public class TruckTeamController {
 
     @Log(behavior = "车队修改",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/put")
-    public WebResponse editTruckTeam(@RequestBody Truckteam truckteam,HttpServletRequest request) {
+    public WebResponse editTruckTeam(@RequestBody Truckteam truckteam) {
         int num = truckTeamService.editTruckTeam(truckteam);
         if (num > 0) {
             return WebResponse.success(num,"修改成功");

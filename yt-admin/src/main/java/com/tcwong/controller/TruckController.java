@@ -9,7 +9,6 @@ import com.tcwong.service.ITruckService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
@@ -26,7 +25,7 @@ public class TruckController {
 
     @Log(behavior = "车辆添加",fkTypeid = LogdicType.GET)
     @PostMapping("/add")
-    public WebResponse addTruck(@RequestBody Truck truck, HttpServletRequest request) {
+    public WebResponse addTruck(@RequestBody Truck truck) {
         int num = truckService.addTruck(truck);
         if (num > 0) {
             return WebResponse.success("添加成功");
@@ -36,7 +35,7 @@ public class TruckController {
 
     @Log(behavior = "车辆修改",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/put")
-    public WebResponse editTruck(@RequestBody Truck truck, HttpServletRequest request) {
+    public WebResponse editTruck(@RequestBody Truck truck) {
         int num = truckService.editTruck(truck);
         if (num >0) {
             return WebResponse.success("编辑成功");
@@ -46,7 +45,7 @@ public class TruckController {
 
     @Log(behavior = "车辆删除",fkTypeid = LogdicType.DELETE)
     @DeleteMapping("/delete/{ids}")
-    public WebResponse deleteByIds(@PathVariable String ids, HttpServletRequest request){
+    public WebResponse deleteByIds(@PathVariable String ids){
         int num = truckService.deleteByIds(ids);
         if (num >0){
             return WebResponse.success("删除成功");
@@ -56,7 +55,7 @@ public class TruckController {
 
     @PostMapping("/getAllByPage")
     public WebResponse getAllTrucksByPage(Integer page,Integer size,String number,String type,
-                                          Integer fkTeamid, HttpServletRequest request){
+                                          Integer fkTeamid){
         WebPageResponse pageResponse = truckService.search(page, size, number, type, fkTeamid);
         if (pageResponse != null){
             return WebResponse.success(pageResponse, "查询成功");
@@ -66,8 +65,7 @@ public class TruckController {
 
 
     @GetMapping("/search")
-    public WebResponse doSearch(Integer page,Integer size,String number,String type,String fkTeamid,
-                                HttpServletRequest request){
+    public WebResponse doSearch(Integer page,Integer size,String number,String type,String fkTeamid){
         String number1 = null;
         String type1 = null;
         Integer fkTeamid1 = null;
@@ -92,7 +90,7 @@ public class TruckController {
 
 
     @RequestMapping("/getTrucks")
-    public WebResponse selectTruck(HttpServletRequest request){
+    public WebResponse selectTruck(){
         List<Truck> trucks = truckService.selectTruck();
         if (trucks != null){
             return WebResponse.success(trucks);

@@ -24,7 +24,7 @@ public class GoodsServiceImpl implements IGoodsService {
 
     @Override
     public int editGoods(Goods goods) {
-        return goodsMapper.insertSelective(goods);
+        return goodsMapper.updateByPrimaryKeySelective(goods);
     }
 
     @Override

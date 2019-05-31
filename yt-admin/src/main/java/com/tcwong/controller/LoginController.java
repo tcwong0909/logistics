@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 登录
@@ -29,7 +28,7 @@ public class LoginController {
 
     @Log(behavior = "登录",fkTypeid = LogdicType.LOGIN)
     @PostMapping("/login")
-    public WebResponse login(@RequestBody LoginBean user, HttpServletRequest request){
+    public WebResponse login(@RequestBody LoginBean user){
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(new UsernamePasswordToken(user.getAccount(), user.getPassword()));
@@ -44,7 +43,7 @@ public class LoginController {
 
     @Log(behavior = "注销登录",fkTypeid = LogdicType.LOGOUT)
     @PostMapping("/logout")
-    public WebResponse logout(HttpServletRequest request){
+    public WebResponse logout(){
         Session session = SecurityUtils.getSubject().getSession();
         session.stop();
         return WebResponse.success("注销成功");

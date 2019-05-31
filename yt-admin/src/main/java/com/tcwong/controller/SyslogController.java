@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/syslog/")
@@ -18,7 +17,7 @@ public class SyslogController {
 
     @PostMapping("/getAllByPage")
     public WebResponse getAllSyslog(Integer page, Integer size, String behavior, String fkTypeid,
-                                    String fkUserid , Integer isexception, HttpServletRequest request) {
+                                    String fkUserid , Integer isexception) {
         WebPageResponse pageResponse = syslogService.getAllSyslog(page, size, behavior, fkTypeid, fkUserid, isexception);
         if (pageResponse != null) {
             return WebResponse.success(pageResponse, "查询成功");

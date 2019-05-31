@@ -38,7 +38,7 @@ public class ScheduleServiceImpl implements IScheduleService {
         truckMapper.updateByPrimaryKeySelective(truck);
         Carriers carriers = new Carriers();
         carriers.setCarriersid(scheduling.getFkCarriersid());
-        carriers.setFinishedstate(1);
+        carriers.setFinishedstate(2);
         carriers.setAltertime(new Date());
         carriersMapper.updateByPrimaryKeySelective(carriers);
         return 1;
@@ -84,6 +84,11 @@ public class ScheduleServiceImpl implements IScheduleService {
     @Override
     public int addCost(Scheduling scheduling) {
         scheduling.setAltertime(new Date());
+        Integer fkCarriersid = scheduling.getFkCarriersid();
+        Carriers carriers = new Carriers();
+        carriers.setFinishedstate(4);
+        carriers.setCarriersid(fkCarriersid);
+        carriersMapper.updateByPrimaryKeySelective(carriers);
         return schedulingMapper.updateByPrimaryKeySelective(scheduling);
     }
 }

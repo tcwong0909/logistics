@@ -17,7 +17,8 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
     @Override
     public int addUser(User user) {
-        user.setPassword((new Md5Hash("123456",user.getAccount(),1024)).toString());
+        String password = new Md5Hash("123456").toString();
+        user.setPassword((new Md5Hash(password,user.getAccount(),1024)).toString());
         user.setCheckintime(new Date());
         user.setAltertime(new Date());
         return userMapper.insert(user);

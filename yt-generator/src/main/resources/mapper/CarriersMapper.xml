@@ -99,7 +99,7 @@
   </resultMap>
 
   <update id="updateByIds">
-    update carriers set finishedState = 0 where carriersID in (
+    update carriers set finishedState = 1 where carriersID in (
     <foreach collection="ids" item="id" separator=",">
       #{id}
     </foreach>

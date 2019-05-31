@@ -2,13 +2,16 @@ package com.tcwong.service.impl;
 
 import com.tcwong.bean.Carriers;
 import com.tcwong.bean.Goods;
+import com.tcwong.bean.User;
 import com.tcwong.common.WebPageResponse;
 import com.tcwong.dao.CarriersMapper;
 import com.tcwong.service.ICarriersService;
 import com.tcwong.service.IGoodsService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Service
 public class CarriersServiceImpl implements ICarriersService {
@@ -18,7 +21,12 @@ public class CarriersServiceImpl implements ICarriersService {
     private IGoodsService goodsService;
     @Override
     public int addCarrier(Carriers carriers) {
+        Integer userid = ((User) (SecurityUtils.getSubject().getSession().getAttribute("user"))).getUserid();
+        carriers.setFkUserid(userid);
         Goods goods = carriers.getGoods();
+        carriers.setAltertime(new Date());
+        carriers.setCheckintime(new Date());
+        carriers.setFinishedstate(1);
         int num1 = carriersMapper.insert(carriers);
         goods.setFkCarriersid(carriers.getCarriersid());
         int num2 = goodsService.addGoods(goods);
@@ -28,7 +36,10 @@ public class CarriersServiceImpl implements ICarriersService {
 
     @Override
     public int editCarrier(Carriers carriers) {
-        return carriersMapper.updateByPrimaryKeySelective(carriers);
+        Goods goods = carriers.getGoods();
+        carriers.setAltertime(new Date());
+        carriersMapper.updateByPrimaryKeySelective(carriers);
+        return goodsService.editGoods(goods);
     }
 
     @Override
@@ -52,7 +63,7 @@ public class CarriersServiceImpl implements ICarriersService {
     public int reveiveById(Integer id) {
         Carriers carriers = new Carriers();
         carriers.setCarriersid(id);
-        carriers.setFinishedstate(2);
+        carriers.setFinishedstate(3);
         return carriersMapper.updateByPrimaryKeySelective(carriers);
     }
 }

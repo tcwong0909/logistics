@@ -9,7 +9,6 @@ import com.tcwong.service.IScheduleService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 成本维护
@@ -23,7 +22,7 @@ public class CostController {
 
 
     @PostMapping("/getAllByPage")
-    public WebResponse getAllByPage(Integer page,Integer size,Integer schedulingid,Integer fkCarriersid, HttpServletRequest request){
+    public WebResponse getAllByPage(Integer page,Integer size,Integer schedulingid,Integer fkCarriersid){
         WebPageResponse pageResponse = scheduleService.getSchedules(page, size, schedulingid, fkCarriersid, null, null);
         if (pageResponse != null) {
             return WebResponse.success(pageResponse, "查询成功");
@@ -33,7 +32,7 @@ public class CostController {
 
     @Log(behavior = "成本添加",fkTypeid = LogdicType.ADD)
     @PutMapping("/add")
-    public WebResponse addCost(@RequestBody Scheduling scheduling, HttpServletRequest request){
+    public WebResponse addCost(@RequestBody Scheduling scheduling){
         int num = scheduleService.addCost(scheduling);
         if (num > 0) {
             return WebResponse.success("添加成功");

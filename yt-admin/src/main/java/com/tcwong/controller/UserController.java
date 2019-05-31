@@ -9,7 +9,6 @@ import com.tcwong.service.IUserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -23,7 +22,7 @@ public class UserController {
 
     @Log(behavior = "用户添加",fkTypeid = LogdicType.ADD)
     @PostMapping("/add")
-    public WebResponse addUser(@RequestBody User user, HttpServletRequest request) {
+    public WebResponse addUser(@RequestBody User user) {
         int num = userService.addUser(user);
         if (num > 0) {
             return WebResponse.success("添加成功");
@@ -33,7 +32,7 @@ public class UserController {
 
     @Log(behavior = "用户删除",fkTypeid = LogdicType.DELETE)
     @DeleteMapping("/delete/{ids}")
-    public WebResponse deleteByIds(@PathVariable String ids, HttpServletRequest request) {
+    public WebResponse deleteByIds(@PathVariable String ids) {
         int num = userService.deleteByIds(ids);
         if (num > 0) {
             return WebResponse.success("删除成功");
@@ -43,7 +42,7 @@ public class UserController {
 
     @Log(behavior = "用户修改",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/edit")
-    public WebResponse editUser(@RequestBody User user, HttpServletRequest request) {
+    public WebResponse editUser(@RequestBody User user) {
         int num = userService.editUser(user);
         if (num > 0) {
             return WebResponse.success("修改成功");
@@ -51,10 +50,9 @@ public class UserController {
         return WebResponse.failed("删除失败");
     }
 
-    @Log(behavior = "用户查询",fkTypeid = LogdicType.GET)
     @PostMapping("/getAllByPage")
     public WebResponse getAllByPage(Integer page, Integer size, String username,String account,
-                                    Integer sex, Integer fkRoleid , HttpServletRequest request) {
+                                    Integer sex, Integer fkRoleid) {
         WebPageResponse pageResponse = userService.getAllByPage(page, size, username, account, sex, fkRoleid);
         if (pageResponse != null) {
             return WebResponse.success(pageResponse, "查询成功");
@@ -64,7 +62,7 @@ public class UserController {
 
     @Log(behavior = "修改密码",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/password")
-    public WebResponse editPassword(@RequestBody User user, HttpServletRequest request) {
+    public WebResponse editPassword(@RequestBody User user) {
         int num = userService.editPassword(user);
         if (num == 0) {
            return WebResponse.failed("密码不对，请重新输入");

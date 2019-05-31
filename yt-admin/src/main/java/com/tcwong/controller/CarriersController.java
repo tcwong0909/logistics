@@ -1,7 +1,6 @@
 package com.tcwong.controller;
 
 import com.tcwong.bean.Carriers;
-import com.tcwong.bean.Goods;
 import com.tcwong.common.Log;
 import com.tcwong.common.LogdicType;
 import com.tcwong.common.WebPageResponse;
@@ -11,7 +10,6 @@ import com.tcwong.service.IGoodsService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 承运单
@@ -27,7 +25,7 @@ public class CarriersController  {
 
     @Log(behavior = "添加承运单货物",fkTypeid = LogdicType.ADD)
     @PostMapping("/add")
-    public WebResponse addCarriersGoods(@RequestBody Carriers carriers, HttpServletRequest request) {
+    public WebResponse addCarriersGoods(@RequestBody Carriers carriers) {
 
         int num = carriersService.addCarrier(carriers);
         if (num > 0) {
@@ -38,7 +36,7 @@ public class CarriersController  {
 
     @Log(behavior = "删除承运单",fkTypeid = LogdicType.DELETE)
     @DeleteMapping("/delete/{ids}")
-    public WebResponse deleteCarriersGoods(@PathVariable String ids, HttpServletRequest request) {
+    public WebResponse deleteCarriersGoods(@PathVariable String ids) {
         int num1 = carriersService.deleteCarrier(ids);
         int num2 = goodsService.deleteGoods(ids);
         if (num1 > 0 && num2 > 0) {
@@ -49,11 +47,9 @@ public class CarriersController  {
 
     @Log(behavior = "修改承运单",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/put")
-    public WebResponse editCarriersGoods(@RequestBody Carriers carriers, @RequestBody Goods goods,
-                                         HttpServletRequest request) {
-        int num1 = carriersService.editCarrier(carriers);
-        int num2 = goodsService.editGoods(goods);
-        if (num1 > 0 && num2 > 0) {
+    public WebResponse editCarriersGoods(@RequestBody Carriers carriers) {
+        int num = carriersService.editCarrier(carriers);
+        if (num > 0 ) {
             return WebResponse.success("修改成功");
         }
         return WebResponse.failed("修改失败");
@@ -61,7 +57,7 @@ public class CarriersController  {
 
     @PostMapping("/getAll")
     public WebResponse getAllByPage(Integer page,Integer size,String sendcompany,String receivecompany,
-                                    Integer finishedstate, HttpServletRequest request){
+                                    Integer finishedstate){
         WebPageResponse pageResponse = carriersService.getAllByPage(page, size, sendcompany, receivecompany, finishedstate);
         if (pageResponse != null) {
             return WebResponse.success(pageResponse, "查询成功");
@@ -71,7 +67,7 @@ public class CarriersController  {
 
     @Log(behavior = "承运单接收",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/receive/{id}")
-    public WebResponse reveiveById(@PathVariable Integer id , HttpServletRequest request){
+    public WebResponse reveiveById(@PathVariable Integer id ){
         int num = carriersService.reveiveById(id);
         if (num > 0) {
             return WebResponse.success("接收成功");

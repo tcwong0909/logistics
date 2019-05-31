@@ -9,7 +9,6 @@ import com.tcwong.service.IContactService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 车辆绑定
@@ -23,7 +22,7 @@ public class ContactController {
 
     @Log(behavior = "车辆绑定",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/put")
-    public WebResponse bindTruck(@RequestBody Contact contact, HttpServletRequest request) {
+    public WebResponse bindTruck(@RequestBody Contact contact) {
         int num = contactService.bindTruck(contact);
         if (num > 0) {
             return WebResponse.success("绑定成功");
@@ -33,7 +32,7 @@ public class ContactController {
 
     @Log(behavior = "解除车辆绑定",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/delete/{ids}")
-    public WebResponse unbindTrucks(@PathVariable String ids,HttpServletRequest request) {
+    public WebResponse unbindTrucks(@PathVariable String ids) {
         int num = contactService.unbindTrucks(ids);
         if (num > 0) {
             return WebResponse.success("解除成功");
@@ -43,7 +42,7 @@ public class ContactController {
 
     @GetMapping("/getAll")
     public WebResponse getContact(Integer page,Integer size,Integer fkTruckid,Integer fkDriverid,String drivername,
-                                  String teamname,Integer bindId, HttpServletRequest request) {
+                                  String teamname,Integer bindId) {
         WebPageResponse pageResponse = contactService.getAll( page,size,fkTruckid,fkDriverid,drivername,
                 teamname, bindId);
         if (pageResponse != null) {

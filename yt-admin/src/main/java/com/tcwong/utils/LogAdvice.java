@@ -11,7 +11,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -23,6 +23,9 @@ import java.util.Date;
  */
 @Aspect
 public class LogAdvice {
+
+    @Autowired
+    private HttpServletRequest request;
 
     private Logger logger = Logger.getLogger(LogAdvice.class);
 
@@ -75,13 +78,8 @@ public class LogAdvice {
                 }
             }
         }
-        if (args.length>0){
-            HttpServletRequest request =  ((HttpServletRequest)(args[args.length - 1]));
-            ip = IP.getIpAddress(request);
-        }
-        if (args.length > 1) {
-            args = Arrays.copyOfRange(args, 0, args.length - 1);
-        }
+        ip=IP.getIpAddress(request);
+
         parameters = Arrays.toString(args);
         Syslog syslog = new Syslog(fkTypeid, fkUserid, procname, ip, checkintime, isexception, behavior, parameters, exception);
         syslogService.addSyslog(syslog);
@@ -126,18 +124,11 @@ public class LogAdvice {
                 }
             }
         }
-        if (args.length>0){
-            HttpServletRequest request =  ((HttpServletRequest)(args[args.length - 1]));
-            ip = IP.getIpAddress(request);
-        }
+        ip=IP.getIpAddress(request);
         exception = e.getMessage();
-        if (args.length > 1) {
-            args = Arrays.copyOfRange(args, 0, args.length - 1);
-        }
         parameters = Arrays.toString(args);
         Syslog syslog = new Syslog(fkTypeid, fkUserid, procname, ip, checkintime, isexception, behavior, parameters, exception);
         syslogService.addSyslog(syslog);
-        System.out.println("AfterThrowing++++++++++");
     }
 
 }

@@ -9,7 +9,6 @@ import com.tcwong.service.IScheduleService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ public class ScheduleController {
 
     @Log(behavior = "承运单调度",fkTypeid = LogdicType.UPDATE)
     @PutMapping("/dispatch")
-    public WebResponse dispatchById(@RequestBody Scheduling scheduling, HttpServletRequest request) {
+    public WebResponse dispatchById(@RequestBody Scheduling scheduling) {
 
         int num = scheduleService.dispatchById(scheduling);
         if (num > 0) {

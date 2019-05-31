@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ public class GoodsController {
     private IGoodsService goodsService;
 
     @GetMapping("/goodslist")
-    public WebResponse getGoods(HttpServletRequest request){
+    public WebResponse getGoods(){
         List<Goods> goodsList = goodsService.getAll();
         return WebResponse.success(goodsList);
     }
