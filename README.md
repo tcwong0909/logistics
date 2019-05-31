@@ -38,7 +38,7 @@
 
 2、前端采用VUE、VUE-axios、VUE-router、ElementUI、js-md5等技术框架开。
 
-前端代码地址[https://gitee.com/tcwong/logisticsWeb](https://gitee.com/tcwong/logisticsWeb)
+前端代码地址[https://github.com/tcwong0909/logisticsWeb](https://github.com/tcwong0909/logisticsWeb)
 
 #### 后端代码结构
 
