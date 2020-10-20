@@ -1,5 +1,7 @@
 # 物流后台管理系统
 
+已停止更新，物流项目请转至 鹏城物流[https://gitee.com/tcwong/pengExpressMS](https://gitee.com/tcwong/pengExpressMS)
+
 #### 项目功能介绍
 本项目是一套为物流公司提供后台管理的自动化平台，其功能实现主要分为三个大模块；
 
